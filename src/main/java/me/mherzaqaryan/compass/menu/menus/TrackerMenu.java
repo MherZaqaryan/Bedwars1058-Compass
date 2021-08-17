@@ -100,15 +100,12 @@ public class TrackerMenu extends Menu {
     public void setMenuItems() {
         NBTItem nbtItem = new NBTItem(CompassPlugin.getConfigData().getItem(player, ConfigData.TRACKER_MENU_BACK_ITEM, true, "main-menu"));
         int index = 0;
-        System.out.println(1);
         for (ITeam team : arena.getTeams()) {
-            System.out.println(2);
             if (team.getMembers().isEmpty()) continue;
             if (arena.getTeam(player).equals(team)) continue;
             if (slots.size() <= index) continue;
             NBTItem teamItem = new NBTItem(CompassPlugin.getConfigData().getItem(player, ConfigData.TRACKER_MENU_TEAM_ITEM, false, null));
             teamSlotMap.put(slots.get(index), team);
-            System.out.println(3);
             inventory.setItem(slots.get(index), getTeamItem(teamItem.getItem(), team, player));
             index++;
         }
