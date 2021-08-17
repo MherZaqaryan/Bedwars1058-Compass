@@ -1,0 +1,10 @@
+main: me.mherzaqaryan.compass.CompassPlugin
+name: BedWars1058-Compass
+author: Mher Zaqaryan
+version: ${project.version}
+api-version: '1.13'
+description: BedWars1058 Compass Addon By Mher Zaqaryan
+
+softdepend:
+  - BedWars1058
+  - PlaceholderAPI
