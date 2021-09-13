@@ -2,13 +2,13 @@ package me.mherzaqaryan.compass.menu.menus.communicationMenus;
 
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
-import de.tr7zw.nbtapi.NBTItem;
 import me.mherzaqaryan.compass.CompassPlugin;
-import me.mherzaqaryan.compass.data.ConfigData;
+import me.mherzaqaryan.compass.data.MainConfig;
 import me.mherzaqaryan.compass.data.MessagesData;
 import me.mherzaqaryan.compass.menu.Menu;
 import me.mherzaqaryan.compass.menu.menus.CommunicationsMenu;
 import me.mherzaqaryan.compass.util.MessagingUtil;
+import me.mherzaqaryan.compass.util.NBTItem;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -37,7 +37,7 @@ public class ResourceSelector extends Menu {
 
     @Override
     public int getSlots() {
-        return CompassPlugin.getConfigData().getInt(ConfigData.COMMUNICATIONS_MENU_RESOURCES+".size");
+        return CompassPlugin.getMainConfig().getInt(MainConfig.COMMUNICATIONS_MENU_RESOURCES+".size");
     }
 
     @Override
@@ -60,11 +60,11 @@ public class ResourceSelector extends Menu {
     @Override
     public void setMenuItems() {
         for (String s : resources) {
-            NBTItem nbtItem = new NBTItem(CompassPlugin.getConfigData().getResourceItem(player, s, path));
+            NBTItem nbtItem = new NBTItem(CompassPlugin.getMainConfig().getResourceItem(player, s, path));
             inventory.setItem(nbtItem.getInteger("slot"), nbtItem.getItem());
             resourceMap.put(nbtItem.getInteger("slot"), s);
         }
-        NBTItem nbtItem = new NBTItem(CompassPlugin.getConfigData().getItem(player, ConfigData.COMMUNICATIONS_MENU_RESOURCES+".back-item", true, "back-item"));
+        NBTItem nbtItem = new NBTItem(CompassPlugin.getMainConfig().getItem(player, MainConfig.COMMUNICATIONS_MENU_RESOURCES+".back-item", true, "back-item"));
         inventory.setItem(nbtItem.getInteger("slot"), nbtItem.getItem());
     }
 

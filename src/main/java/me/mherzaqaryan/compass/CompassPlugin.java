@@ -5,7 +5,7 @@ import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
 import lombok.Getter;
 import me.mherzaqaryan.compass.command.CompassMenuCommand;
-import me.mherzaqaryan.compass.data.ConfigData;
+import me.mherzaqaryan.compass.data.MainConfig;
 import me.mherzaqaryan.compass.data.MessagesData;
 import me.mherzaqaryan.compass.listener.GameListener;
 import me.mherzaqaryan.compass.listener.MenuListener;
@@ -22,7 +22,7 @@ public class CompassPlugin extends JavaPlugin {
 
     @Getter private static CompassPlugin instance;
     @Getter private static BedWars bedWars;
-    @Getter private static ConfigData configData;
+    @Getter private static MainConfig mainConfig;
     @Getter private static final HashMap<IArena, HashMap<UUID, ITeam>> trackingArenaMap = new HashMap<>();
     @Getter private static boolean isUsingPapi = false;
 
@@ -43,8 +43,8 @@ public class CompassPlugin extends JavaPlugin {
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) isUsingPapi = true;
         bedWars = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
         new CompassMenuCommand(bedWars.getBedWarsCommand(), "compass");
-        configData = new ConfigData(this, "config", bedWars.getAddonsPath().getPath()+File.separator+"Compass");
-        configData.reload();
+        mainConfig = new MainConfig(this, "config", bedWars.getAddonsPath().getPath()+File.separator+"Compass");
+        mainConfig.reload();
         new MessagesData();
         Arrays.asList(new MenuListener(), new GameListener()).forEach(l -> Bukkit.getPluginManager().registerEvents(l, this));
         getLogger().log(Level.INFO, "Successfully loaded in " + (System.currentTimeMillis() - start) + "ms");

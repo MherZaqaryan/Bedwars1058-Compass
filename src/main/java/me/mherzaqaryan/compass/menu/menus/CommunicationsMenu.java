@@ -2,14 +2,15 @@ package me.mherzaqaryan.compass.menu.menus;
 
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
-import de.tr7zw.nbtapi.NBTItem;
+
 import me.mherzaqaryan.compass.CompassPlugin;
-import me.mherzaqaryan.compass.data.ConfigData;
+import me.mherzaqaryan.compass.data.MainConfig;
 import me.mherzaqaryan.compass.data.MessagesData;
 import me.mherzaqaryan.compass.menu.Menu;
 import me.mherzaqaryan.compass.menu.menus.communicationMenus.ResourceSelector;
 import me.mherzaqaryan.compass.menu.menus.communicationMenus.TeamSelector;
 import me.mherzaqaryan.compass.util.MessagingUtil;
+import me.mherzaqaryan.compass.util.NBTItem;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -32,7 +33,7 @@ public class CommunicationsMenu extends Menu {
 
     @Override
     public int getSlots() {
-        return CompassPlugin.getConfigData().getInt(ConfigData.COMMUNICATIONS_MENU_SIZE);
+        return CompassPlugin.getMainConfig().getInt(MainConfig.COMMUNICATIONS_MENU_SIZE);
     }
 
     @Override
@@ -61,11 +62,11 @@ public class CommunicationsMenu extends Menu {
 
     @Override
     public void setMenuItems() {
-        for (String s : CompassPlugin.getConfigData().getYml().getConfigurationSection(ConfigData.COMMUNICATIONS_MENU_ITEMS).getKeys(false)) {
-            NBTItem nbtItem = new NBTItem(CompassPlugin.getConfigData().getCommunicationItem(player, ConfigData.COMMUNICATIONS_MENU_ITEMS+"."+s));
+        for (String s : CompassPlugin.getMainConfig().getYml().getConfigurationSection(MainConfig.COMMUNICATIONS_MENU_ITEMS).getKeys(false)) {
+            NBTItem nbtItem = new NBTItem(CompassPlugin.getMainConfig().getCommunicationItem(player, MainConfig.COMMUNICATIONS_MENU_ITEMS+"."+s));
             inventory.setItem(nbtItem.getInteger("slot"), nbtItem.getItem());
         }
-        NBTItem backItem = new NBTItem(CompassPlugin.getConfigData().getItem(player, ConfigData.COMMUNICATIONS_MENU_BACK, true, "back-item"));
+        NBTItem backItem = new NBTItem(CompassPlugin.getMainConfig().getItem(player, MainConfig.COMMUNICATIONS_MENU_BACK, true, "back-item"));
         inventory.setItem(backItem.getInteger("slot"), backItem.getItem());
     }
 

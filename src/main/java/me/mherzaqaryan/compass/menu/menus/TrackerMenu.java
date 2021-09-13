@@ -2,12 +2,13 @@ package me.mherzaqaryan.compass.menu.menus;
 
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
-import de.tr7zw.nbtapi.NBTItem;
+
 import me.mherzaqaryan.compass.CompassPlugin;
-import me.mherzaqaryan.compass.data.ConfigData;
+import me.mherzaqaryan.compass.data.MainConfig;
 import me.mherzaqaryan.compass.data.MessagesData;
 import me.mherzaqaryan.compass.menu.Menu;
 import me.mherzaqaryan.compass.tasks.ActionBarTask;
+import me.mherzaqaryan.compass.util.NBTItem;
 import me.mherzaqaryan.compass.util.TextUtil;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -33,7 +34,7 @@ public class TrackerMenu extends Menu {
         this.arena = arena;
         this.teamSlotMap = new HashMap<>();
         this.yml = MessagesData.getYml(player);
-        for (String s : CompassPlugin.getConfigData().getYml().getString(ConfigData.TRACKER_MENU_SLOTS).split(",")) {
+        for (String s : CompassPlugin.getMainConfig().getYml().getString(MainConfig.TRACKER_MENU_SLOTS).split(",")) {
             int i;
             try {
                 i = Integer.parseInt(s);
@@ -51,7 +52,7 @@ public class TrackerMenu extends Menu {
 
     @Override
     public int getSlots() {
-        return CompassPlugin.getConfigData().getInt(ConfigData.TRACKER_MENU_SIZE);
+        return CompassPlugin.getMainConfig().getInt(MainConfig.TRACKER_MENU_SIZE);
     }
 
     @Override
@@ -72,7 +73,7 @@ public class TrackerMenu extends Menu {
             return;
         }
 
-        if (!player.getInventory().contains(Material.valueOf(CompassPlugin.getConfigData().getString(ConfigData.PLAYER_TRACK_RESOURCE)), CompassPlugin.getConfigData().getInt(ConfigData.PLAYER_TRACK_COST))) {
+        if (!player.getInventory().contains(Material.valueOf(CompassPlugin.getMainConfig().getString(MainConfig.PLAYER_TRACK_RESOURCE)), CompassPlugin.getMainConfig().getInt(MainConfig.PLAYER_TRACK_COST))) {
             player.closeInventory();
             player.sendMessage(TextUtil.colorize(yml.getString(MessagesData.NOT_ENOUGH_RESOURCE)));
             return;
@@ -88,23 +89,23 @@ public class TrackerMenu extends Menu {
         }
 
         if (!CompassPlugin.getTrackingArenaMap().containsKey(arena)) {
-            new ActionBarTask(arena).runTaskTimer(CompassPlugin.getInstance(), 0, CompassPlugin.getConfigData().getInt(ConfigData.TRACKER_UPDATE_RATE));
+            new ActionBarTask(arena).runTaskTimer(CompassPlugin.getInstance(), 0, CompassPlugin.getMainConfig().getInt(MainConfig.TRACKER_UPDATE_RATE));
         }
 
         CompassPlugin.setTrackingTeam(arena, uuid, teamSlotMap.get(e.getSlot()));
-        CompassPlugin.getBedWars().getShopUtil().takeMoney(player, Material.valueOf(CompassPlugin.getConfigData().getString(ConfigData.PLAYER_TRACK_RESOURCE)), CompassPlugin.getConfigData().getInt(ConfigData.PLAYER_TRACK_COST));
+        CompassPlugin.getBedWars().getShopUtil().takeMoney(player, Material.valueOf(CompassPlugin.getMainConfig().getString(MainConfig.PLAYER_TRACK_RESOURCE)), CompassPlugin.getMainConfig().getInt(MainConfig.PLAYER_TRACK_COST));
         player.sendMessage(TextUtil.colorize(yml.getString(MessagesData.PURCHASED)));
     }
 
     @Override
     public void setMenuItems() {
-        NBTItem nbtItem = new NBTItem(CompassPlugin.getConfigData().getItem(player, ConfigData.TRACKER_MENU_BACK_ITEM, true, "main-menu"));
+        NBTItem nbtItem = new NBTItem(CompassPlugin.getMainConfig().getItem(player, MainConfig.TRACKER_MENU_BACK_ITEM, true, "main-menu"));
         int index = 0;
         for (ITeam team : arena.getTeams()) {
             if (team.getMembers().isEmpty()) continue;
             if (arena.getTeam(player).equals(team)) continue;
             if (slots.size() <= index) continue;
-            NBTItem teamItem = new NBTItem(CompassPlugin.getConfigData().getItem(player, ConfigData.TRACKER_MENU_TEAM_ITEM, false, null));
+            NBTItem teamItem = new NBTItem(CompassPlugin.getMainConfig().getItem(player, MainConfig.TRACKER_MENU_TEAM_ITEM, false, null));
             teamSlotMap.put(slots.get(index), team);
             inventory.setItem(slots.get(index), getTeamItem(teamItem.getItem(), team, player));
             index++;
@@ -126,7 +127,7 @@ public class TrackerMenu extends Menu {
     public String getStatus(Player player, IArena arena) {
         if (!isAllBedsDestroyed(arena.getTeam(player))) {
             return yml.getString(MessagesData.STATUS_LOCKED);
-        }else if (!player.getInventory().contains(Material.valueOf(CompassPlugin.getConfigData().getString(ConfigData.PLAYER_TRACK_RESOURCE)), CompassPlugin.getConfigData().getInt(ConfigData.PLAYER_TRACK_COST))) {
+        }else if (!player.getInventory().contains(Material.valueOf(CompassPlugin.getMainConfig().getString(MainConfig.PLAYER_TRACK_RESOURCE)), CompassPlugin.getMainConfig().getInt(MainConfig.PLAYER_TRACK_COST))) {
             return yml.getString(MessagesData.STATUS_NOT_ENOUGH);
         }else {
             return yml.getString(MessagesData.STATUS_UNLOCKED);

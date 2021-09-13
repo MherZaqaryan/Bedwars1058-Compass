@@ -3,13 +3,14 @@ package me.mherzaqaryan.compass.menu.menus.communicationMenus;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
 import com.andrei1058.bedwars.api.language.Language;
-import de.tr7zw.nbtapi.NBTItem;
+
 import me.mherzaqaryan.compass.CompassPlugin;
-import me.mherzaqaryan.compass.data.ConfigData;
+import me.mherzaqaryan.compass.data.MainConfig;
 import me.mherzaqaryan.compass.data.MessagesData;
 import me.mherzaqaryan.compass.menu.Menu;
 import me.mherzaqaryan.compass.menu.menus.CommunicationsMenu;
 import me.mherzaqaryan.compass.util.MessagingUtil;
+import me.mherzaqaryan.compass.util.NBTItem;
 import me.mherzaqaryan.compass.util.TextUtil;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -45,7 +46,7 @@ public class TeamSelector extends Menu {
         this.team = team;
         this.arena = team.getArena();
         this.path = path;
-        for (String s : CompassPlugin.getConfigData().getYml().getString(ConfigData.COMMUNICATIONS_MENU_TEAMS+".slots").split(",")) {
+        for (String s : CompassPlugin.getMainConfig().getYml().getString(MainConfig.COMMUNICATIONS_MENU_TEAMS+".slots").split(",")) {
             int i;
             try {
                 i = Integer.parseInt(s);
@@ -63,7 +64,7 @@ public class TeamSelector extends Menu {
 
     @Override
     public int getSlots() {
-        return CompassPlugin.getConfigData().getInt(ConfigData.COMMUNICATIONS_MENU_TEAMS+".size");
+        return CompassPlugin.getMainConfig().getInt(MainConfig.COMMUNICATIONS_MENU_TEAMS+".size");
     }
 
     @Override
@@ -91,11 +92,11 @@ public class TeamSelector extends Menu {
             if (t.getMembers().isEmpty()) continue;
             if (t.equals(team)) continue;
             if (slots.size() <= index) continue;
-            inventory.setItem(slots.get(index), getTeamItem(CompassPlugin.getConfigData().getItem(player, ConfigData.TRACKER_MENU_TEAM_ITEM, false, null), t));
+            inventory.setItem(slots.get(index), getTeamItem(CompassPlugin.getMainConfig().getItem(player, MainConfig.TRACKER_MENU_TEAM_ITEM, false, null), t));
             teamMap.put(slots.get(index), t);
             index++;
         }
-        NBTItem nbtBack = new NBTItem(CompassPlugin.getConfigData().getItem(player, ConfigData.COMMUNICATIONS_MENU_TEAMS+".back-item", true, "back-item"));
+        NBTItem nbtBack = new NBTItem(CompassPlugin.getMainConfig().getItem(player, MainConfig.COMMUNICATIONS_MENU_TEAMS+".back-item", true, "back-item"));
         inventory.setItem(nbtBack.getInteger("slot"), nbtBack.getItem());
     }
 

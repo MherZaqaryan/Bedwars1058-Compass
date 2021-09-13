@@ -44,7 +44,7 @@ public class CompassMenuCommand extends SubCommand {
                 }
                 else if (args[0].equalsIgnoreCase("reload")) {
                     if (player.hasPermission("bw.compass.reload")) {
-                        CompassPlugin.getConfigData().reload();
+                        CompassPlugin.getMainConfig().reload();
                         player.sendMessage(TextUtil.colorize("&aConfiguration file has been reloaded."));
                     }
                 }

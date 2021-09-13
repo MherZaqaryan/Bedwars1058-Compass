@@ -2,25 +2,19 @@ package me.mherzaqaryan.compass.data;
 
 import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.configuration.ConfigManager;
-import de.tr7zw.nbtapi.NBTItem;
 import me.mherzaqaryan.compass.CompassPlugin;
 import me.mherzaqaryan.compass.menu.MenuType;
-import me.mherzaqaryan.compass.util.VersionUtil;
-import me.mherzaqaryan.compass.util.TextUtil;
+import me.mherzaqaryan.compass.util.ItemBuilder;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Collectors;
 
-public class ConfigData extends ConfigManager {
+public class MainConfig extends ConfigManager {
 
-    public ConfigData(Plugin plugin, String name, String dir) {
+    public MainConfig(Plugin plugin, String name, String dir) {
         super(plugin, name, dir);
         YamlConfiguration config = getYml();
         BedWars bw = CompassPlugin.getBedWars();
@@ -35,7 +29,7 @@ public class ConfigData extends ConfigManager {
         config.addDefault(MAIN_MENU_SIZE, 27);
 
         saveItem(COMPASS_ITEM, "COMPASS", false, 8);
-        config.addDefault(COMPASS_ITEM+".drop-slot", 17);
+//        config.addDefault(COMPASS_ITEM+".drop-slot", 17);
         saveItem(MAIN_MENU_TRACKER, "COMPASS", false, 13);
         saveItem(MAIN_MENU_TRACKER_TEAM, "COMPASS", false, 15);
         saveItem(MAIN_MENU_COMMUNICATIONS, "EMERALD", false, 11);
@@ -76,27 +70,27 @@ public class ConfigData extends ConfigManager {
         save();
     }
 
-    public void saveResource(String path, String material, boolean enchanted, int slot) {
+    private void saveResource(String path, String material, boolean enchanted, int slot) {
         YamlConfiguration yml = getYml();
         yml.addDefault(path+".material", material);
         yml.addDefault(path+".enchanted", enchanted);
         yml.addDefault(path+".slot", slot);
     }
 
-    public void saveItem(String path, String material, boolean enchanted, int slot) {
+    private void saveItem(String path, String material, boolean enchanted, int slot) {
         YamlConfiguration yml = getYml();
         yml.addDefault(path+".material", material);
         yml.addDefault(path+".enchanted", enchanted);
         yml.addDefault(path+".slot", slot);
     }
 
-    public void saveItem(String path, String material, boolean enchanted) {
+    private void saveItem(String path, String material, boolean enchanted) {
         YamlConfiguration yml = getYml();
         yml.addDefault(path+".material", material);
         yml.addDefault(path+".enchanted", enchanted);
     }
 
-    public void saveCommunicationItem(String path, String material, boolean enchanted, int slot, MenuType menuType) {
+    private void saveCommunicationItem(String path, String material, boolean enchanted, int slot, MenuType menuType) {
         YamlConfiguration yml = getYml();
         path = COMMUNICATIONS_MENU_ITEMS +"."+ path;
         yml.addDefault(path+".material", material);
@@ -105,53 +99,36 @@ public class ConfigData extends ConfigManager {
         yml.addDefault(path+".menu", menuType.toString());
     }
 
-    public ItemStack getResourceItem(Player player, String name, final String path) {
-        name = COMMUNICATIONS_MENU_RESOURCES+"."+name;
+    public ItemStack getResourceItem(Player player, String name, String path) {
+        name = COMMUNICATIONS_MENU_RESOURCES + "." + name;
         YamlConfiguration msg = MessagesData.getYml(player);
-        ItemStack itemStack = VersionUtil.buildItemStack(getString(name+".material"));
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        if (getBoolean(name+".enchanted")) {
-            itemMeta.addEnchant(Enchantment.LUCK, 0, false);
-            itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        }
-        String displayName = TextUtil.colorize(msg.getString(path).replace("{resource}", msg.getString(MessagesData.PATH +name+ ".resource-name")));
-        itemMeta.setDisplayName(displayName);
-        List<String> lore = new ArrayList<>();
-        msg.getStringList(MessagesData.COMMUNICATIONS_MENU_LORE).forEach(s -> lore.add(TextUtil.colorize(s.replace("{message}", displayName))));
-        itemMeta.setLore(lore);
-        itemStack.setItemMeta(itemMeta);
-        NBTItem nbtItem = new NBTItem(itemStack);
-        nbtItem.setString("path", path);
-        nbtItem.setString("data", "resource-item");
-        nbtItem.setInteger("slot", getInt(name+".slot"));
-        return nbtItem.getItem();
+        String displayName = msg.getString(path).replace("{resource}", msg.getString(MessagesData.PATH + name + ".resource-name"));
+        return new ItemBuilder(getString(name + ".material"))
+            .setDisplayName(displayName)
+            .setLore(msg.getStringList(MessagesData.COMMUNICATIONS_MENU_LORE).stream().map(s -> s.replace("{message}", displayName)).collect(Collectors.toList()))
+            .setEnchanted(getBoolean(name + ".enchanted"))
+            .addTag("path", path)
+            .addTag("data", "resource-item")
+            .addTag("slot", getInt(name + ".slot"))
+            .build();
     }
 
     public ItemStack getCommunicationItem(Player player, String path) {
-        ItemStack itemStack = getItem(player, path, true, "communication-item");
-        NBTItem nbtItem = new NBTItem(itemStack);
-        nbtItem.setString("path", MessagesData.PATH+path+".message");
-        nbtItem.setString("menuType", getString(path+".menu"));
-        return nbtItem.getItem();
+        return new ItemBuilder(getItem(player, path, true, "communication-item"))
+            .addTag("path", MessagesData.PATH + path + ".message")
+            .addTag("menuType", getString(path + ".menu"))
+            .build();
     }
 
     public ItemStack getItem(Player player, String path, boolean hasSlot, String customData) {
         YamlConfiguration msg = MessagesData.getYml(player);
-        ItemStack itemStack = VersionUtil.buildItemStack(getString(path + ".material"));
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        if (getBoolean(path+".enchanted")) {
-            itemMeta.addEnchant(Enchantment.LUCK, 0, false);
-            itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        }
-        itemMeta.setDisplayName(TextUtil.colorize(msg.getString(MessagesData.PATH +path+ ".display-name")));
-        itemMeta.setLore(TextUtil.colorize(msg.getStringList(MessagesData.PATH +path+ ".lore")));
-        itemStack.setItemMeta(itemMeta);
-        NBTItem nbtItem = new NBTItem(itemStack);
-        if (hasSlot) nbtItem.setInteger("slot", getInt(path+".slot"));
-        if (customData != null) nbtItem.setString("data", customData);
-        return nbtItem.getItem();
+        ItemBuilder ib = new ItemBuilder(getString(path + ".material"))
+            .setEnchanted(getBoolean(path + ".enchanted"))
+            .setDisplayName(msg.getString(MessagesData.PATH +path+ ".display-name"))
+            .setLore(msg.getStringList(MessagesData.PATH + path + ".lore"));
+        if (customData != null) ib.addTag("data", customData);
+        if (hasSlot) ib.addTag("slot", getInt(path + ".slot"));
+        return ib.build();
     }
 
     public static final String
@@ -161,6 +138,7 @@ public class ConfigData extends ConfigManager {
             MAIN_MENU_TRACKER = "menus.main-menu.tracker",
             MAIN_MENU_TRACKER_TEAM = "menus.main-menu.tracker-team",
             MAIN_MENU_COMMUNICATIONS = "menus.main-menu.communications",
+            TRACKER_MENU = "menus.tracker-menu",
             TRACKER_MENU_SIZE = "menus.tracker-menu.size",
             TRACKER_MENU_SLOTS = "menus.tracker-menu.slots",
             TRACKER_MENU_TEAM_ITEM = "menus.tracker-menu.team-item",

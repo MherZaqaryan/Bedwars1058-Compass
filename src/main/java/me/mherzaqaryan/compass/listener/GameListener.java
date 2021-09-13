@@ -7,9 +7,9 @@ import com.andrei1058.bedwars.api.events.gameplay.GameStateChangeEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerKillEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerLeaveArenaEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerReSpawnEvent;
-import de.tr7zw.nbtapi.NBTItem;
 import me.mherzaqaryan.compass.CompassPlugin;
-import me.mherzaqaryan.compass.data.ConfigData;
+import me.mherzaqaryan.compass.data.MainConfig;
+import me.mherzaqaryan.compass.util.NBTItem;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,6 +22,8 @@ import org.bukkit.inventory.PlayerInventory;
 import java.util.UUID;
 
 public class GameListener implements Listener {
+
+    private final MainConfig config = CompassPlugin.getMainConfig();
 
     @EventHandler
     public void onServerQuit(PlayerQuitEvent e) {
@@ -45,7 +47,7 @@ public class GameListener implements Listener {
     public void onKill(PlayerDeathEvent e) {
         Player player = e.getEntity();
         if (!CompassPlugin.getBedWars().getArenaUtil().isPlaying(player)) return;
-        NBTItem nbti = new NBTItem(CompassPlugin.getConfigData().getItem(player, ConfigData.COMPASS_ITEM, true, "compass-item"));
+        NBTItem nbti = new NBTItem(CompassPlugin.getMainConfig().getItem(player, MainConfig.COMPASS_ITEM, true, "compass-item"));
         e.getDrops().remove(nbti.getItem());
     }
 
@@ -79,15 +81,16 @@ public class GameListener implements Listener {
 
     @EventHandler
     public void onCompassDrop(ItemSpawnEvent e) {
-        ItemStack itemStack = e.getEntity().getItemStack();
-        if (itemStack == null) return;
-        NBTItem nbtItem = new NBTItem(itemStack);
-        if (nbtItem.getString("data").equals("compass-item")) e.setCancelled(true);
+        ItemStack is = e.getEntity().getItemStack();
+        if (is == null) return;
+        NBTItem item = new NBTItem(is);
+        if (item.getString("data") == null) return;
+        if (item.getString("data").equals("compass-item")) e.setCancelled(true);
     }
 
     public void addToInventory(Player player) {
         PlayerInventory inventory = player.getInventory();
-        NBTItem nbti = new NBTItem(CompassPlugin.getConfigData().getItem(player, ConfigData.COMPASS_ITEM, true, "compass-item"));
+        NBTItem nbti = new NBTItem(CompassPlugin.getMainConfig().getItem(player, MainConfig.COMPASS_ITEM, true, "compass-item"));
         inventory.setItem(nbti.getInteger("slot"), nbti.getItem());
     }
 

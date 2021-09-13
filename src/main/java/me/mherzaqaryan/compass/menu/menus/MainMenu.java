@@ -3,11 +3,12 @@ package me.mherzaqaryan.compass.menu.menus;
 import com.andrei1058.bedwars.api.arena.GameState;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
-import de.tr7zw.nbtapi.NBTItem;
+
 import me.mherzaqaryan.compass.CompassPlugin;
-import me.mherzaqaryan.compass.data.ConfigData;
+import me.mherzaqaryan.compass.data.MainConfig;
 import me.mherzaqaryan.compass.data.MessagesData;
 import me.mherzaqaryan.compass.menu.Menu;
+import me.mherzaqaryan.compass.util.NBTItem;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -28,7 +29,7 @@ public class MainMenu extends Menu {
 
     @Override
     public int getSlots() {
-        return CompassPlugin.getConfigData().getInt(ConfigData.MAIN_MENU_SIZE);
+        return CompassPlugin.getMainConfig().getInt(MainConfig.MAIN_MENU_SIZE);
     }
 
     @Override
@@ -52,14 +53,14 @@ public class MainMenu extends Menu {
     public void setMenuItems() {
         IArena arena = CompassPlugin.getBedWars().getArenaUtil().getArenaByPlayer(player);
         ITeam team = arena.getTeam(player);
-        if (team.getMembers().size() > 1 && CompassPlugin.getConfigData().getBoolean(ConfigData.USE_COMMUNICATIONS)) {
-            NBTItem nbtTracker = new NBTItem(CompassPlugin.getConfigData().getItem(player, ConfigData.MAIN_MENU_TRACKER_TEAM, true, "tracker-menu"));
-            NBTItem nbtComm = new NBTItem(CompassPlugin.getConfigData().getItem(player, ConfigData.MAIN_MENU_COMMUNICATIONS, true, "communications-menu"));
+        if (team.getMembers().size() > 1 && CompassPlugin.getMainConfig().getBoolean(MainConfig.USE_COMMUNICATIONS)) {
+            NBTItem nbtTracker = new NBTItem(CompassPlugin.getMainConfig().getItem(player, MainConfig.MAIN_MENU_TRACKER_TEAM, true, "tracker-menu"));
+            NBTItem nbtComm = new NBTItem(CompassPlugin.getMainConfig().getItem(player, MainConfig.MAIN_MENU_COMMUNICATIONS, true, "communications-menu"));
             inventory.setItem(nbtTracker.getInteger("slot"), nbtTracker.getItem());
             inventory.setItem(nbtComm.getInteger("slot"), nbtComm.getItem());
         }
         else {
-            NBTItem nbtItem = new NBTItem(CompassPlugin.getConfigData().getItem(player, ConfigData.MAIN_MENU_TRACKER, true, "tracker-menu"));
+            NBTItem nbtItem = new NBTItem(CompassPlugin.getMainConfig().getItem(player, MainConfig.MAIN_MENU_TRACKER, true, "tracker-menu"));
             inventory.setItem(nbtItem.getInteger("slot"), nbtItem.getItem());
         }
     }
