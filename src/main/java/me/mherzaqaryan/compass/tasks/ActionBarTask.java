@@ -21,10 +21,7 @@ public class ActionBarTask extends BukkitRunnable {
 
     @Override
     public void run() {
-        if (arena.getPlayers().isEmpty()
-                || arena.getPlayers().size() == 1
-                || !CompassPlugin.getTrackingArenaMap().containsKey(arena)
-                || CompassPlugin.getTrackingTeamMap(arena) == null) {
+        if (arena.getPlayers().size() <= 1 || !CompassPlugin.getTrackingArenaMap().containsKey(arena) || CompassPlugin.getTrackingTeamMap(arena) == null) {
             cancel();
             return;
         }

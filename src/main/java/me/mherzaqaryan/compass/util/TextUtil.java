@@ -37,6 +37,10 @@ public class TextUtil {
         return tc;
     }
 
+    public static TextComponent blank() {
+        return new TextComponent("");
+    }
+
     public static String toUppercaseFirstChar(String str) {
         return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
     }

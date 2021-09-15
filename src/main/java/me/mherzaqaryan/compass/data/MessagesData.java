@@ -13,16 +13,10 @@ public class MessagesData {
     }
 
     public void setupMessages() {
-
         for (Language l : Language.getLanguages()) {
             YamlConfiguration yml = l.getYml();
-
             switch (l.getIso()) {
-
-                // By @Mher
-
                 case "ru":
-
                     yml.addDefault(NOT_ALL_BEDS_DESTROYED, "&cЕще не все вражеские кровати уничтожены!");
                     yml.addDefault(PURCHASED, "&cВы потеряете возможность отслеживать эту команду, когда умрете!");
                     yml.addDefault(NOT_ENOUGH_RESOURCE, "&cУ вас недостаточно ресурсов!");
@@ -32,7 +26,6 @@ public class MessagesData {
                     yml.addDefault(STATUS_UNLOCKED, "&eНажмите, чтобы купить!");
                     yml.addDefault(ACTION_BAR_TRACKING, "&fОтслеживание: {teamColor}&l{target} &f- дистанция: &a&l{distance}m");
                     yml.addDefault(TEAM_MESSAGE_FORMAT, "&a&lКОМАНДА > &7{player}: {message}");
-
                     saveItem(yml, MainConfig.COMPASS_ITEM, "&aКомпас &7(ПКМ)");
                     yml.addDefault(MAIN_MENU_TITLE, "&8Трекер и коммуникации");
                     saveItem(yml, MainConfig.MAIN_MENU_TRACKER, "&aМагазин трекеров", "&7Обновление отслеживания покупок", "&7для вашего компаса, который будет", "&7отслеживать каждого игрока на", "&7конкретная команда, пока вы" , "&7умри.", "", "&eНажмите, чтобы открыть!");
@@ -43,7 +36,6 @@ public class MessagesData {
                     saveItem(yml, MainConfig.TRACKER_MENU_BACK_ITEM, "&aВернитесь назад", "&7К трекеру и связи");
                     yml.addDefault(COMMUNICATIONS_MENU_TITLE, "&8Быстрое общение");
                     saveItem(yml, MainConfig.COMMUNICATIONS_MENU_BACK, "&aВернитесь назад", "&7К трекеру и связи");
-
                     if (yml.getString(PATH + MainConfig.COMMUNICATIONS_MENU_ITEMS) == null) {
                         saveCommunicationItem(yml, "1", "&aПривет ( ﾟ◡ﾟ)/!", "&aПривет ( ﾟ◡ﾟ)/!", "", "&eНажмите, чтобы отправить!");
                         saveCommunicationItem(yml, "2", "&aЯ возвращаюсь на базу!", "&aЯ возвращаюсь на базу!", "", "&eНажмите, чтобы отправить!");
@@ -58,7 +50,6 @@ public class MessagesData {
                         saveCommunicationItem(yml, "11", "&aНам нужно {resource}", "&aНам нужны ресурсы!", "&7Вы сможете выбрать", "&7ресурс", "", "&eНажмите, чтобы отправить!");
                         saveCommunicationItem(yml, "12", "&aВходящий игрок!", "&aВходящий игрок!!", "", "&eНажмите, чтобы отправить!");
                     }
-
                     yml.addDefault(COMMUNICATIONS_MENU_LORE, new String[]{"&7Нажмите, чтобы отправить", "&7сообщение: '{message}&7'", "&7своим товарищам по команде!", "", "&eНажмите, чтобы отправить!"});
                     yml.addDefault(COMMUNICATIONS_MENU_TEAMS_TITLE, "&8Выберите вариант:");
                     saveItem(yml, MainConfig.COMMUNICATIONS_MENU_TEAMS + ".back-item", "&aВернитесь назад" , "&7К быстрой связи!" );
@@ -71,9 +62,7 @@ public class MessagesData {
                     break;
 
                 // By @SAvselgafg415 (Polish)
-
                 case "pl":
-
                     yml.addDefault(NOT_ALL_BEDS_DESTROYED, "&cWszystkie łóżka nie zostały zniszczone!");
                     yml.addDefault(PURCHASED, "&cJeśli umrzesz stracisz namierzanie!");
                     yml.addDefault(NOT_ENOUGH_RESOURCE, "&cMasz za malo surowców!");
@@ -83,7 +72,6 @@ public class MessagesData {
                     yml.addDefault(STATUS_UNLOCKED, "&eKliknij, aby kupić!");
                     yml.addDefault(ACTION_BAR_TRACKING, "&fNamierzanie: {teamColor}&l{target} &f- Dystans: &a&l{distance}m");
                     yml.addDefault(TEAM_MESSAGE_FORMAT, "&a&lDRUŻYNA > &7{player}: {message}");
-
                     saveItem(yml, MainConfig.COMPASS_ITEM, "&aKompas &7(PRM)");
                     yml.addDefault(MAIN_MENU_TITLE, "&8Namierzanie i komunikacja");
                     saveItem(yml, MainConfig.MAIN_MENU_TRACKER, "&aNamierzanie", "&7Kupując namierzanie drużyny", "&7jesteś przekonany, że", "&7dojdziesz do wroga", "&7Stracisz namierzanie", "&7jeśli umrzesz.", "", "&eKliknij, aby otworzyc!");
@@ -94,7 +82,6 @@ public class MessagesData {
                     saveItem(yml, MainConfig.TRACKER_MENU_BACK_ITEM, "&aPowrot", "&7Powraca ciebie do głównej strony");
                     yml.addDefault(COMMUNICATIONS_MENU_TITLE, "&aSzybka komunikacja");
                     saveItem(yml, MainConfig.COMMUNICATIONS_MENU_BACK, "&aPowrot", "&7Powraca ciebie do głównej strony");
-
                     if (yml.getString(PATH + MainConfig.COMMUNICATIONS_MENU_ITEMS) == null) {
                         saveCommunicationItem(yml, "1", "&aCześć ( ﾟ◡ﾟ)/!", "&aCześć ( ﾟ◡ﾟ)/!", "", "&eKliknij, aby wyslac!");
                         saveCommunicationItem(yml, "2", "&aWracam do bazy!", "&aWracam do bazy!", "", "&eKliknij, aby wyslac!");
@@ -109,7 +96,6 @@ public class MessagesData {
                         saveCommunicationItem(yml, "11", "&aPotrzebujemy {resource}", "&aPotrzebne nam są!", "&7Będziesz mógł wybrać", "&7zasób", "", "&eKliknij, aby wyslac!");
                         saveCommunicationItem(yml, "12", "&aWrog sie zbliza!", "&aWrog sie zbliza!!", "", "&eKliknij, aby wyslac!");
                     }
-
                     yml.addDefault(COMMUNICATIONS_MENU_LORE, new String[]{"&7Kliknij, aby wyslac wiadomosc: '{message}&7'", "&7do twojej druzyny!", "", "&eKliknij, aby wyslac!"});
                     yml.addDefault(COMMUNICATIONS_MENU_TEAMS_TITLE, "&8Wybierz opcję:");
                     saveItem(yml, MainConfig.COMMUNICATIONS_MENU_TEAMS + ".back-item", "&aPowrot", "&7Powraca ciebie do szybkiej komunimacji");
@@ -119,25 +105,19 @@ public class MessagesData {
                     saveResource(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".gold", "&6&lZLOTO");
                     saveResource(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".diamond", "&b&lDIAMENT");
                     saveResource(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".emerald", "&2&lSZMARAGD");
-
                     break;
 
                 // By @Gradin98 (Romain)
-
                 case "ro":
-
                     yml.addDefault(NOT_ALL_BEDS_DESTROYED, "&cNu toate paturile au fost distruse inca!");
                     yml.addDefault(PURCHASED, "&cO sa pierzi abilitatea de a urmarii aceasta echipa cand vei murii!");
                     yml.addDefault(NOT_ENOUGH_RESOURCE, "&cNu ai destule resurse!");
                     yml.addDefault(ALREADY_TRACKING, "&cDeja urmaresti aceasta echipa!");
-
                     yml.addDefault(STATUS_NOT_ENOUGH, "&cNu ai destule resurse!");
                     yml.addDefault(STATUS_LOCKED, "&cSe va debloca cand toate paturile inamicilor vor fi distruse!");
                     yml.addDefault(STATUS_UNLOCKED, "&eClick pentru a cumpara!");
-
                     yml.addDefault(ACTION_BAR_TRACKING, "&fUrmaresti: {teamColor}&l{target} &f- Distanta: &a&l{distance}m");
                     yml.addDefault(TEAM_MESSAGE_FORMAT, "&a&lEchipa > &7{player}: {message}");
-
                     saveItem(yml, MainConfig.COMPASS_ITEM, "&aCompas &7(Click Dreapta)");
                     yml.addDefault(MAIN_MENU_TITLE, "&8Tracker & Communications");
                     saveItem(yml, MainConfig.MAIN_MENU_TRACKER, "&aMagazin de Trackere", "&7Cumpara tracker upgrades", "&7pentru compasul care va", "&7urmarii jucatorii dintr-o", "&7echipa specifica pana cand tu vei", "&7murii.", "", "&eClick sa deschizi!");
@@ -148,7 +128,6 @@ public class MessagesData {
                     saveItem(yml, MainConfig.TRACKER_MENU_BACK_ITEM, "&aDu-te inapoi", "&7To Tracker & Communication");
                     yml.addDefault(COMMUNICATIONS_MENU_TITLE, "&8Comunicare Rapida");
                     saveItem(yml, MainConfig.COMMUNICATIONS_MENU_BACK, "&aDu-te inapoi", "&7To Tracker & Communication");
-
                     if (yml.getString(PATH + MainConfig.COMMUNICATIONS_MENU_ITEMS) == null) {
                         saveCommunicationItem(yml, "1", "&aSalut ( ﾟ◡ﾟ)/!", "&aSalut ( ﾟ◡ﾟ)/!", "", "&eClick sa trimiti!");
                         saveCommunicationItem(yml, "2", "&aRevin catre baza", "&aRevin catre baza!", "", "&eClick sa trimiti!");
@@ -163,7 +142,6 @@ public class MessagesData {
                         saveCommunicationItem(yml, "11", "&aAvem nevoie de {resource}", "&aAvem nevoie de resurse!", "&7Vei avea posibilitatea de a", "&7selecta resursa", "", "&eClick sa trimiti!");
                         saveCommunicationItem(yml, "12", "&aVine un player!", "&aVine un player!!", "", "&eClick sa trimiti!");
                     }
-
                     yml.addDefault(COMMUNICATIONS_MENU_LORE, new String[]{"&7Click sa trimiti mesajul: '{message}&7'", "&7catre echipa ta", "", "&eClick sa trimiti!"});
                     yml.addDefault(COMMUNICATIONS_MENU_TEAMS_TITLE, "&8Selecteaza o optiunea:");
                     saveItem(yml, MainConfig.COMMUNICATIONS_MENU_TEAMS + ".back-item", "&aDu-te inapoi", "&7Catre comunicare rapida");
@@ -173,25 +151,19 @@ public class MessagesData {
                     saveResource(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".gold", "&6&lAUR");
                     saveResource(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".diamond", "&b&lDIAMANT");
                     saveResource(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".emerald", "&2&lEMERALD");
-
                     break;
 
                 // By @Yuri2005 (Italian)
-
                 case "it":
-
                     yml.addDefault(NOT_ALL_BEDS_DESTROYED, "&cNon sono distrutti tutti i letti!");
                     yml.addDefault(PURCHASED, "&cPerderai l'abilità di rintracciare i giocatori alla morte!");
                     yml.addDefault(NOT_ENOUGH_RESOURCE, "&cNon hai abbastanza risorse!");
                     yml.addDefault(ALREADY_TRACKING, "&cStai già rintracciando un team!");
-
                     yml.addDefault(STATUS_NOT_ENOUGH, "&cNon ha abbastanza risorse!");
                     yml.addDefault(STATUS_LOCKED, "&cSi sbloccherà quando tutti i letti sono distrutti!");
                     yml.addDefault(STATUS_UNLOCKED, "&eClicca per acquistare!");
-
                     yml.addDefault(ACTION_BAR_TRACKING, "&fTracking: {teamColor}&l{target} &f- Distanza: &a&l{distance}m");
                     yml.addDefault(TEAM_MESSAGE_FORMAT, "&a&lTEAM > &7{player}: {message}");
-
                     saveItem(yml, MainConfig.COMPASS_ITEM, "&aBussola &7(Click destro)");
                     yml.addDefault(MAIN_MENU_TITLE, "&8Tracker & Comunicazioni");
                     saveItem(yml, MainConfig.MAIN_MENU_TRACKER, "&aAcquista il tracker", "&7Compra l'aggiornamento Tracker", "&7che ci penserà la tua bussola a farlo", "&7Rintraccia ogni giocatore in una", "&7squadra specifica fino alla", "&7tua morte!.", "", "&eClicca per aprire!");
@@ -202,7 +174,6 @@ public class MessagesData {
                     saveItem(yml, MainConfig.TRACKER_MENU_BACK_ITEM, "&aTorna indietro", "&7To Tracker & Comunicazioni");
                     yml.addDefault(COMMUNICATIONS_MENU_TITLE, "&8Comunicazioni veloci");
                     saveItem(yml, MainConfig.COMMUNICATIONS_MENU_BACK, "&aTorna indietro", "&7To Tracker & Comunicazioni");
-
                     if (yml.getString(PATH + MainConfig.COMMUNICATIONS_MENU_ITEMS) == null) {
                         saveCommunicationItem(yml, "1", "&aCiao ( ﾟ◡ﾟ)/!", "&aCiao ( ﾟ◡ﾟ)/!", "", "&eClicca per inviare!");
                         saveCommunicationItem(yml, "2", "&aSto tornando alla base!", "&aSto tornando alla base!", "", "&eClicca per inviare!");
@@ -217,7 +188,6 @@ public class MessagesData {
                         saveCommunicationItem(yml, "11", "&aCi serve {resource}", "&aCi servono risorse!", "&7potrai selezionare", "&7la risorsa", "", "&eClicca per inviare!");
                         saveCommunicationItem(yml, "12", "&aSta arrivando un giocatore!", "&aSta arrivando un giocatore!", "", "&eClicca per inviare!");
                     }
-
                     yml.addDefault(COMMUNICATIONS_MENU_LORE, new String[]{"&7Clicca per inviare un messaggio: '{message}&7'", "&7ai tuoi compagni di squadra!", "", "&eClicca per inviare!"});
                     yml.addDefault(COMMUNICATIONS_MENU_TEAMS_TITLE, "&8Scegli un'opzione:");
                     saveItem(yml, MainConfig.COMMUNICATIONS_MENU_TEAMS + ".back-item", "&aIndietro!", "&7Comunicazioni rapide");
@@ -227,11 +197,7 @@ public class MessagesData {
                     saveResource(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".gold", "&6&lORO");
                     saveResource(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".diamond", "&b&lDIAMANTE");
                     saveResource(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".emerald", "&2&lSMERALDO");
-
-
                     break;
-
-                // By @Mher
 
                 default:
                     yml.addDefault(NOT_ALL_BEDS_DESTROYED, "&cNot all enemy beds are destroyed yet!");
@@ -243,7 +209,6 @@ public class MessagesData {
                     yml.addDefault(STATUS_UNLOCKED, "&eClick to purchase!");
                     yml.addDefault(ACTION_BAR_TRACKING, "&fTracking: {teamColor}&l{target} &f- Distance: &a&l{distance}m");
                     yml.addDefault(TEAM_MESSAGE_FORMAT, "&a&lTEAM > &7{player}: {message}");
-
                     saveItem(yml, MainConfig.COMPASS_ITEM, "&aCompass &7(Right Click)");
                     yml.addDefault(MAIN_MENU_TITLE, "&8Tracker & Communications");
                     saveItem(yml, MainConfig.MAIN_MENU_TRACKER, "&aTracker Shop", "&7Purchase tracking upgrade", "&7for your compass which will", "&7track each player on a", "&7specific team until you", "&7die.", "", "&eClick to open!");
@@ -254,7 +219,6 @@ public class MessagesData {
                     saveItem(yml, MainConfig.TRACKER_MENU_BACK_ITEM, "&aGo Back", "&7To Tracker & Communication");
                     yml.addDefault(COMMUNICATIONS_MENU_TITLE, "&8Quick Communications");
                     saveItem(yml, MainConfig.COMMUNICATIONS_MENU_BACK, "&aGo Back", "&7To Tracker & Communication");
-
                     if (yml.getString(PATH + MainConfig.COMMUNICATIONS_MENU_ITEMS) == null) {
                         saveCommunicationItem(yml, "1", "&aHello ( ﾟ◡ﾟ)/!", "&aHello ( ﾟ◡ﾟ)/!", "", "&eClick to send!");
                         saveCommunicationItem(yml, "2", "&aI'm coming back to base!", "&aI'm coming back to base!", "", "&eClick to send!");
@@ -269,7 +233,6 @@ public class MessagesData {
                         saveCommunicationItem(yml, "11", "&aWe need {resource}", "&aWe need resources!", "&7You will be able to select", "&7the Resource", "", "&eClick to send!");
                         saveCommunicationItem(yml, "12", "&aPlayer incoming!", "&aPlayer incoming!!", "", "&eClick to send!");
                     }
-
                     yml.addDefault(COMMUNICATIONS_MENU_LORE, new String[]{"&7Click to send message: '{message}&7'", "&7to your teammates!", "", "&eClick to send!"});
                     yml.addDefault(COMMUNICATIONS_MENU_TEAMS_TITLE, "&8Select an option:");
                     saveItem(yml, MainConfig.COMMUNICATIONS_MENU_TEAMS + ".back-item", "&aGo Back", "&7To Quick Communications");
@@ -281,11 +244,9 @@ public class MessagesData {
                     saveResource(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".emerald", "&2&lEMERALD");
                     break;
             }
-
             l.getYml().options().copyDefaults(true);
             l.save();
         }
-
     }
 
     public static Language getLang(Player player) {
@@ -296,18 +257,18 @@ public class MessagesData {
         return getLang(player).getYml();
     }
 
-    public void saveResource(YamlConfiguration yml, String path, String resourceName) {
+    private void saveResource(YamlConfiguration yml, String path, String resourceName) {
         path = PATH + path;
-        yml.addDefault(path+".resource-name", resourceName);
+        yml.addDefault(path + ".resource-name", resourceName);
     }
 
-    public void saveItem(YamlConfiguration yml, String path, String displayName, String... lore) {
+    private void saveItem(YamlConfiguration yml, String path, String displayName, String... lore) {
         path = PATH + path;
         yml.addDefault(path+".display-name", displayName);
         yml.addDefault(path+".lore", lore);
     }
 
-    public void saveCommunicationItem(YamlConfiguration yml, String path, String message, String displayName, String... lore) {
+    private void saveCommunicationItem(YamlConfiguration yml, String path, String message, String displayName, String... lore) {
         path = PATH + MainConfig.COMMUNICATIONS_MENU_ITEMS +"."+ path;
         yml.addDefault(path+".message", message);
         yml.addDefault(path+".display-name", displayName);
@@ -324,13 +285,11 @@ public class MessagesData {
             STATUS_NOT_ENOUGH = PATH + "tracker-status.not-enough",
             ACTION_BAR_TRACKING = PATH + "action-bar.tracking-format",
             TEAM_MESSAGE_FORMAT = PATH + "team-message-format",
-
             MAIN_MENU_TITLE = PATH + "menus.main-menu.title",
             TRACKER_MENU_TITLE = PATH + "menus.tracker-menu.title",
             COMMUNICATIONS_MENU_TITLE = PATH + "menus.communications.title",
             COMMUNICATIONS_MENU_RESOURCES_TITLE = PATH + "communication-menus.resources.title",
             COMMUNICATIONS_MENU_TEAMS_TITLE = PATH + "communication-menus.teams.title",
-
             COMMUNICATIONS_MENU_LORE = PATH + "communication-menus.lore";
 
 }

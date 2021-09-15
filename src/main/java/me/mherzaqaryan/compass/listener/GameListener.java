@@ -7,6 +7,7 @@ import com.andrei1058.bedwars.api.events.gameplay.GameStateChangeEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerKillEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerLeaveArenaEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerReSpawnEvent;
+import com.andrei1058.bedwars.arena.Arena;
 import me.mherzaqaryan.compass.CompassPlugin;
 import me.mherzaqaryan.compass.data.MainConfig;
 import me.mherzaqaryan.compass.util.NBTItem;
@@ -17,13 +18,10 @@ import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 
 import java.util.UUID;
 
 public class GameListener implements Listener {
-
-    private final MainConfig config = CompassPlugin.getMainConfig();
 
     @EventHandler
     public void onServerQuit(PlayerQuitEvent e) {
@@ -38,15 +36,14 @@ public class GameListener implements Listener {
     @EventHandler
     public void onLeave(PlayerLeaveArenaEvent e) {
         IArena arena = e.getArena();
-        Player player = e.getPlayer();
-        UUID uuid = player.getUniqueId();
+        UUID uuid = e.getPlayer().getUniqueId();
         if (CompassPlugin.isTracking(arena, uuid)) CompassPlugin.removeTrackingTeam(arena, uuid);
     }
 
     @EventHandler
     public void onKill(PlayerDeathEvent e) {
         Player player = e.getEntity();
-        if (!CompassPlugin.getBedWars().getArenaUtil().isPlaying(player)) return;
+        if (!Arena.isInArena(player)) return;
         NBTItem nbti = new NBTItem(CompassPlugin.getMainConfig().getItem(player, MainConfig.COMPASS_ITEM, true, "compass-item"));
         e.getDrops().remove(nbti.getItem());
     }
@@ -63,8 +60,7 @@ public class GameListener implements Listener {
 
     @EventHandler
     public void onRespawn(PlayerReSpawnEvent e) {
-        Player player = e.getPlayer();
-        addToInventory(player);
+        addToInventory(e.getPlayer());
     }
 
     @EventHandler
@@ -74,7 +70,6 @@ public class GameListener implements Listener {
             arena.getPlayers().forEach(this::addToInventory);
         }
         else if (e.getNewState().equals(GameState.restarting)) {
-            if (!CompassPlugin.getTrackingArenaMap().containsKey(arena)) return;
             CompassPlugin.removeTrackingArena(arena);
         }
     }
@@ -83,15 +78,14 @@ public class GameListener implements Listener {
     public void onCompassDrop(ItemSpawnEvent e) {
         ItemStack is = e.getEntity().getItemStack();
         if (is == null) return;
-        NBTItem item = new NBTItem(is);
-        if (item.getString("data") == null) return;
-        if (item.getString("data").equals("compass-item")) e.setCancelled(true);
+        String data = new NBTItem(is).getString("data");
+        if (data == null) return;
+        if (data.equals("compass-item")) e.setCancelled(true);
     }
 
-    public void addToInventory(Player player) {
-        PlayerInventory inventory = player.getInventory();
-        NBTItem nbti = new NBTItem(CompassPlugin.getMainConfig().getItem(player, MainConfig.COMPASS_ITEM, true, "compass-item"));
-        inventory.setItem(nbti.getInteger("slot"), nbti.getItem());
+    public void addToInventory(Player p) {
+        NBTItem nbti = new NBTItem(CompassPlugin.getMainConfig().getItem(p, MainConfig.COMPASS_ITEM, true, "compass-item"));
+        p.getInventory().setItem(nbti.getInteger("slot"), nbti.getItem());
     }
 
 }

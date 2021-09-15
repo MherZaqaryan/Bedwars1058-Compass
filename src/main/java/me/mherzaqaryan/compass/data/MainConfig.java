@@ -23,7 +23,7 @@ public class MainConfig extends ConfigManager {
 
         config.addDefault(USE_COMMUNICATIONS, true);
         config.addDefault(TRACKER_UPDATE_RATE, 1);
-        config.addDefault(MESSAGE_SEND_SOUND, bw.getForCurrentVersion("ARROW_HIT", "ENTITY_ARROW_HIT_PLAYER", "ENTITY_ARROW_HIT_PLAYER") + ",1,1");
+        config.addDefault(MESSAGE_SEND_SOUND, bw.getForCurrentVersion("SUCCESSFUL_HIT", "ENTITY_ARROW_HIT_PLAYER", "ENTITY_ARROW_HIT_PLAYER") + ",1,1");
         config.addDefault(PLAYER_TRACK_COST, 2);
         config.addDefault(PLAYER_TRACK_RESOURCE, "EMERALD");
         config.addDefault(MAIN_MENU_SIZE, 27);
@@ -57,46 +57,42 @@ public class MainConfig extends ConfigManager {
             saveCommunicationItem("12", "FEATHER", false, 25, MenuType.NONE);
         }
 
-        config.addDefault(COMMUNICATIONS_MENU_TEAMS+".size", 36);
-        config.addDefault(COMMUNICATIONS_MENU_TEAMS+".slots", "10,11,12,13,14,15,16,19,20,21,22,23,24,25");
-        saveItem(COMMUNICATIONS_MENU_TEAMS+".back-item", "ARROW", false, 31);
-        config.addDefault(COMMUNICATIONS_MENU_RESOURCES+".size", 36);
-        saveItem(COMMUNICATIONS_MENU_RESOURCES+".back-item", "ARROW", false, 31);
-        saveResource(COMMUNICATIONS_MENU_RESOURCES+".iron", "IRON_INGOT", false, 12);
-        saveResource(COMMUNICATIONS_MENU_RESOURCES+".gold", "GOLD_INGOT", false, 14);
-        saveResource(COMMUNICATIONS_MENU_RESOURCES+".diamond", "DIAMOND", false, 10);
-        saveResource(COMMUNICATIONS_MENU_RESOURCES+".emerald", "EMERALD", false, 16);
+        config.addDefault(COMMUNICATIONS_MENU_TEAMS + ".size", 36);
+        config.addDefault(COMMUNICATIONS_MENU_TEAMS + ".slots", "10,11,12,13,14,15,16,19,20,21,22,23,24,25");
+        saveItem(COMMUNICATIONS_MENU_TEAMS + ".back-item", "ARROW", false, 31);
+        config.addDefault(COMMUNICATIONS_MENU_RESOURCES + ".size", 36);
+        saveItem(COMMUNICATIONS_MENU_RESOURCES + ".back-item", "ARROW", false, 31);
+        saveResource(COMMUNICATIONS_MENU_RESOURCES + ".iron", "IRON_INGOT", false, 12);
+        saveResource(COMMUNICATIONS_MENU_RESOURCES + ".gold", "GOLD_INGOT", false, 14);
+        saveResource(COMMUNICATIONS_MENU_RESOURCES +".diamond", "DIAMOND", false, 10);
+        saveResource(COMMUNICATIONS_MENU_RESOURCES + ".emerald", "EMERALD", false, 16);
         config.options().copyDefaults(true);
         save();
     }
 
     private void saveResource(String path, String material, boolean enchanted, int slot) {
-        YamlConfiguration yml = getYml();
-        yml.addDefault(path+".material", material);
-        yml.addDefault(path+".enchanted", enchanted);
-        yml.addDefault(path+".slot", slot);
+        getYml().addDefault(path + ".material", material);
+        getYml().addDefault(path + ".enchanted", enchanted);
+        getYml().addDefault(path + ".slot", slot);
     }
 
     private void saveItem(String path, String material, boolean enchanted, int slot) {
-        YamlConfiguration yml = getYml();
-        yml.addDefault(path+".material", material);
-        yml.addDefault(path+".enchanted", enchanted);
-        yml.addDefault(path+".slot", slot);
+        getYml().addDefault(path + ".material", material);
+        getYml().addDefault(path + ".enchanted", enchanted);
+        getYml().addDefault(path + ".slot", slot);
     }
 
     private void saveItem(String path, String material, boolean enchanted) {
-        YamlConfiguration yml = getYml();
-        yml.addDefault(path+".material", material);
-        yml.addDefault(path+".enchanted", enchanted);
+        getYml().addDefault(path + ".material", material);
+        getYml().addDefault(path + ".enchanted", enchanted);
     }
 
     private void saveCommunicationItem(String path, String material, boolean enchanted, int slot, MenuType menuType) {
-        YamlConfiguration yml = getYml();
-        path = COMMUNICATIONS_MENU_ITEMS +"."+ path;
-        yml.addDefault(path+".material", material);
-        yml.addDefault(path+".enchanted", enchanted);
-        yml.addDefault(path+".slot", slot);
-        yml.addDefault(path+".menu", menuType.toString());
+        path = COMMUNICATIONS_MENU_ITEMS + "." + path;
+        getYml().addDefault(path + ".material", material);
+        getYml().addDefault(path + ".enchanted", enchanted);
+        getYml().addDefault(path + ".slot", slot);
+        getYml().addDefault(path + ".menu", menuType.toString());
     }
 
     public ItemStack getResourceItem(Player player, String name, String path) {
