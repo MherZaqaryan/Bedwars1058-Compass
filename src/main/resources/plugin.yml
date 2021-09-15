@@ -8,3 +8,4 @@ description: BedWars1058 Compass Addon By Mher Zaqaryan
 softdepend:
   - BedWars1058
   - PlaceholderAPI
+  - Vault

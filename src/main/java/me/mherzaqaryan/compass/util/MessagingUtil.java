@@ -13,45 +13,39 @@ public class MessagingUtil {
 
     public static void simpleMessage(Player player, ITeam team, String path) {
         player.closeInventory();
-        for (Player p : team.getMembers()) {
+        team.getMembers().forEach(p -> {
             YamlConfiguration yml = MessagesData.getYml(p);
             String formatted = yml.getString(MessagesData.TEAM_MESSAGE_FORMAT).replace("{player}", player.getDisplayName()).replace("{message}", yml.getString(path));
-            VersionUtil.playSound(p, CompassPlugin.getMainConfig().getString(MainConfig.MESSAGE_SEND_SOUND));
-            if (CompassPlugin.isUsingPapi()) {
-                p.sendMessage(TextUtil.colorize(PlaceholderAPI.setPlaceholders(player, formatted)));
-                continue;
-            }
+            if (CompassPlugin.isUsingVaultChat()) formatted = CompassPlugin.getVault().setPlaceholders(formatted, player);
+            if (CompassPlugin.isUsingPapi()) formatted = PlaceholderAPI.setPlaceholders(player, formatted);
             p.sendMessage(TextUtil.colorize(formatted));
-        }
+            VersionUtil.playSound(p, CompassPlugin.getMainConfig().getString(MainConfig.MESSAGE_SEND_SOUND));
+        });
     }
 
     public static void resourceMessage(Player player, ITeam team, String path, String resourcePath) {
         player.closeInventory();
-        for (Player p : team.getMembers()) {
+        team.getMembers().forEach(p -> {
             YamlConfiguration yml = MessagesData.getYml(p);
             String formatted = yml.getString(MessagesData.TEAM_MESSAGE_FORMAT).replace("{player}", player.getDisplayName()).replace("{message}", yml.getString(path).replace("{resource}", yml.getString(MessagesData.PATH + MainConfig.COMMUNICATIONS_MENU_RESOURCES + "." + resourcePath + ".resource-name")));
-            VersionUtil.playSound(p, CompassPlugin.getMainConfig().getString(MainConfig.MESSAGE_SEND_SOUND));
-            if (CompassPlugin.isUsingPapi()) {
-                p.sendMessage(TextUtil.colorize(PlaceholderAPI.setPlaceholders(player, formatted)));
-                continue;
-            }
+            if (CompassPlugin.isUsingVaultChat()) formatted = CompassPlugin.getVault().setPlaceholders(formatted, player);
+            if (CompassPlugin.isUsingPapi()) formatted = PlaceholderAPI.setPlaceholders(player, formatted);
             p.sendMessage(TextUtil.colorize(formatted));
-        }
+            VersionUtil.playSound(p, CompassPlugin.getMainConfig().getString(MainConfig.MESSAGE_SEND_SOUND));
+        });
     }
 
     public static void teamMessage(Player player, ITeam team, String path, ITeam specifiedTeam) {
         player.closeInventory();
-        for (Player p : team.getMembers()) {
+        team.getMembers().forEach(p -> {
             Language lang = MessagesData.getLang(p);
             YamlConfiguration yml = lang.getYml();
             String formatted = yml.getString(MessagesData.TEAM_MESSAGE_FORMAT).replace("{player}", player.getDisplayName()).replace("{message}", yml.getString(path).replace("{team}", specifiedTeam.getColor().chat() + "§l" + specifiedTeam.getDisplayName(lang)));
-            VersionUtil.playSound(p, CompassPlugin.getMainConfig().getString(MainConfig.MESSAGE_SEND_SOUND));
-            if (CompassPlugin.isUsingPapi()) {
-                p.sendMessage(TextUtil.colorize(PlaceholderAPI.setPlaceholders(player, formatted)));
-                continue;
-            }
+            if (CompassPlugin.isUsingVaultChat()) formatted = CompassPlugin.getVault().setPlaceholders(formatted, player);
+            if (CompassPlugin.isUsingPapi()) formatted = PlaceholderAPI.setPlaceholders(player, formatted);
             p.sendMessage(TextUtil.colorize(formatted));
-        }
+            VersionUtil.playSound(p, CompassPlugin.getMainConfig().getString(MainConfig.MESSAGE_SEND_SOUND));
+        });
     }
 
 }

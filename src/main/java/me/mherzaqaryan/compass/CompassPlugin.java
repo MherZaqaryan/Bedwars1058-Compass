@@ -9,6 +9,7 @@ import me.mherzaqaryan.compass.data.MainConfig;
 import me.mherzaqaryan.compass.data.MessagesData;
 import me.mherzaqaryan.compass.listener.GameListener;
 import me.mherzaqaryan.compass.listener.MenuListener;
+import me.mherzaqaryan.compass.support.VaultSupport;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -24,7 +25,8 @@ public class CompassPlugin extends JavaPlugin {
     @Getter private static BedWars bedWars;
     @Getter private static MainConfig mainConfig;
     @Getter private static final HashMap<IArena, HashMap<UUID, ITeam>> trackingArenaMap = new HashMap<>();
-    @Getter private static boolean isUsingPapi = false;
+    @Getter private static boolean isUsingVaultChat = false, isUsingPapi = false;
+    @Getter private static VaultSupport vault;
 
     public static final String VERSION = Bukkit.getServer().getClass().getName().split("\\.")[3];
     public static String PLUGIN_VERSION;
@@ -41,6 +43,8 @@ public class CompassPlugin extends JavaPlugin {
         new Metrics(this, 11186);
         PLUGIN_VERSION = getDescription().getVersion();
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) isUsingPapi = true;
+        vault = new VaultSupport();
+        isUsingVaultChat = vault.setupChat();
         bedWars = Bukkit.getServicesManager().getRegistration(BedWars.class).getProvider();
         new CompassMenuCommand(bedWars.getBedWarsCommand(), "compass");
         mainConfig = new MainConfig(this, "config", bedWars.getAddonsPath().getPath()+File.separator+"Compass");
