@@ -17,12 +17,13 @@ public class MenuListener implements Listener {
 
     @EventHandler
     public void onMenuClick(InventoryClickEvent e){
-        if (e.getCurrentItem() == null || e.getCurrentItem().getType().equals(Material.AIR)) return;
         InventoryHolder holder = e.getInventory().getHolder();
-        if (!(holder instanceof Menu)) return;
-        e.setCancelled(true);
-        Menu menu = (Menu) holder;
-        menu.handleMenu(e);
+        if (holder instanceof Menu) {
+            e.setCancelled(true);
+            if (e.getCurrentItem() == null || e.getCurrentItem().getType().equals(Material.AIR)) return;
+            Menu menu = (Menu) holder;
+            menu.handleMenu(e);
+        }
     }
 
     @EventHandler
@@ -45,8 +46,9 @@ public class MenuListener implements Listener {
         ItemStack item = BedWars.nms.getItemInHand(player);
         if (item == null) return;
         if (item.getType() == Material.AIR) return;
-        NBTItem nbtItem = new NBTItem(item);
-        if (!nbtItem.getString("data").equals("compass-item")) return;
+        String data = new NBTItem(item).getString("data");
+        if (data == null) return;
+        if (!data.equals("compass-item")) return;
         Bukkit.dispatchCommand(player, "bw compass menu");
     }
 
@@ -54,9 +56,9 @@ public class MenuListener implements Listener {
     public void onDrag(InventoryDragEvent e) {
         if (e.getCursor() == null) return;
         if (e.getCursor().getType() == Material.AIR) return;
-        NBTItem nbtItem = new NBTItem(e.getCursor());
-        if (nbtItem.getString("data") == null) return;
-        if (nbtItem.getString("data").equals("compass-item")) e.setCancelled(true);
+        String data = new NBTItem(e.getCursor()).getString("data");
+        if (data == null) return;
+        if (data.equals("compass-item")) e.setCancelled(true);
     }
 
 }
