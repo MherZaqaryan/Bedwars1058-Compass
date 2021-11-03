@@ -16,6 +16,50 @@ public class MessagesData {
         for (Language l : Language.getLanguages()) {
             YamlConfiguration yml = l.getYml();
             switch (l.getIso()) {
+                case "es":
+                    yml.addDefault(NOT_ALL_BEDS_DESTROYED, "&cNo todos los enemigos tienen la cama destruida!");
+                    yml.addDefault(PURCHASED, "&cPerderás la habilidad de rastrear a este equipo cuando mueras!");
+                    yml.addDefault(NOT_ENOUGH_RESOURCE, "&cNo tienes suficientes recursos!");
+                    yml.addDefault(ALREADY_TRACKING, "&cYa estas rastreando a este equipo!");
+                    yml.addDefault(STATUS_NOT_ENOUGH, "&cNo tienes suficientes recursos!");
+                    yml.addDefault(STATUS_LOCKED, "&cSe desbloqueara cuando todas las camas enemigas esten destruidas!");
+                    yml.addDefault(STATUS_UNLOCKED, "&eClick para comprar!");
+                    yml.addDefault(ACTION_BAR_TRACKING, "&fRastreando a: {teamColor}&l{target} &f- Distancia: &a&l{distance}m");
+                    yml.addDefault(TEAM_MESSAGE_FORMAT, "&a&lTEAM > &7{player}: {message}");
+                    saveItem(yml, MainConfig.COMPASS_ITEM, "&aBrujula &7(Click Derecho)");
+                    yml.addDefault(MAIN_MENU_TITLE, "&7Comunicación rápida y rastreador");
+                    saveItem(yml, MainConfig.MAIN_MENU_TRACKER, "&aTienda de rastreadores", "&7Compra la habilidad de rastrear", "&7para tu brújula", "&7rastreando a cada jugador en un", "&7equipo específico hasta", "&7que mueras.", "", "&eClick para abrir!");
+                    saveItem(yml, MainConfig.MAIN_MENU_TRACKER_TEAM, "&aTienda de rastreadores", "&7Compra la habilidad de rastrear", "&7para tu brújula", "&7rastreando a cada jugador en un", "&7equipo específico hasta", "&7que mueras.", "", "&eClick para abrir!");
+                    saveItem(yml, MainConfig.MAIN_MENU_COMMUNICATIONS, "&aComunicación rápida", "&7Envía un chat rápido a", "&7tu equipo!", "", "&eClick para abrir!");
+                    yml.addDefault(TRACKER_MENU_TITLE, "&8Comprar rastreador de enemigos");
+                    saveItem(yml, MainConfig.TRACKER_MENU_TEAM_ITEM, "&cRastrear equipo {team}", "&7Compra la habilidad de rastrear", "&7para tu brújula", "&7rastreando a cada jugador en un", "&7equipo específico hasta", "&7que mueras.", "", "&7Precio: &22 Emeralds", "", "{status}");
+                    saveItem(yml, MainConfig.TRACKER_MENU_BACK_ITEM, "&aAtrás", "&7A Comunicación rápida y rastreador");
+                    yml.addDefault(COMMUNICATIONS_MENU_TITLE, "&8Comunicación rapída");
+                    saveItem(yml, MainConfig.COMMUNICATIONS_MENU_BACK, "&aAtrás", "&7A Comunicación rápida y rastreador");
+                    if (yml.getString(PATH + MainConfig.COMMUNICATIONS_MENU_ITEMS) == null) {
+                        saveCommunicationItem(yml, "1", "&aHola ( ﾟ◡ﾟ)/!", "&aHola ( ﾟ◡ﾟ)/!", "", "&eClick apra enviar!");
+                        saveCommunicationItem(yml, "2", "&aEstoy volviendo a la base!", "&aEstoy volviendo a la base!", "", "&eClick para enviar!");
+                        saveCommunicationItem(yml, "3", "&aEstoy defendiendo!", "&aEstoy defendiendo!", "", "&eClick para enviar!");
+                        saveCommunicationItem(yml, "4", "&aEstoy atacando a {team}", "&aEstoy atacando!", "&7Tienes que seleccionar", "&7el equipo", "", "&eClick para enviar!");
+                        saveCommunicationItem(yml, "5", "&aEstoy recolectando {resource}", "&aEstoy recolectando recursos!", "&7Tienes que seleccionar", "&7el material", "", "&eClick para enviar!");
+                        saveCommunicationItem(yml, "6", "&aTengo {resource}", "&aTengo materiales!", "&7Tienes que seleccionar", "&7el material", "", "&eClick para enviar!");
+                        saveCommunicationItem(yml, "7", "&aGracias!", "&aGracias!", "", "&eClick para enviar!");
+                        saveCommunicationItem(yml, "8", "&aVuelve a la base", "&aVuelve a la base!", "", "&eClick para enviar!");
+                        saveCommunicationItem(yml, "9", "&aPorfavor, defiende!", "&aPorfavor, defiende!", "", "&eClick para enviar!");
+                        saveCommunicationItem(yml, "10", "&aVamos a atacar a {team}", "&aVamos a atacar!", "&7Tienes que seleccionar", "&7el equipo", "", "&eClick para enviar!");
+                        saveCommunicationItem(yml, "11", "&aNecesitamos {resource}", "&aNecesitamos materiales!", "&7Tienes que seleccionar", "&7el material", "", "&eClick para enviar!");
+                        saveCommunicationItem(yml, "12", "&aEsta entrando un jugador!", "&aEsta entrando un jugador!", "", "&eClick para enviar!");
+                    }
+                    yml.addDefault(COMMUNICATIONS_MENU_LORE, new String[]{"&7Click para enviar: '{message}&7'", "&7a tu equipo!", "", "&eClick para enviar!"});
+                    yml.addDefault(COMMUNICATIONS_MENU_TEAMS_TITLE, "&8Select an option:");
+                    saveItem(yml, MainConfig.COMMUNICATIONS_MENU_TEAMS + ".back-item", "&aVolver", "&7A comunicacion rápida");
+                    yml.addDefault(COMMUNICATIONS_MENU_RESOURCES_TITLE, "&8Selecciona una accion:");
+                    saveItem(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".back-item", "&aVolver", "&7A comunicacion rápida");
+                    saveResource(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".iron", "&f&lHIERRO");
+                    saveResource(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".gold", "&6&lORO");
+                    saveResource(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".diamond", "&b&lDIAMANTES");
+                    saveResource(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".emerald", "&2&lESMERALDAS");
+                    break;
                 case "ru":
                     yml.addDefault(NOT_ALL_BEDS_DESTROYED, "&cЕще не все вражеские кровати уничтожены!");
                     yml.addDefault(PURCHASED, "&cВы потеряете возможность отслеживать эту команду, когда умрете!");
