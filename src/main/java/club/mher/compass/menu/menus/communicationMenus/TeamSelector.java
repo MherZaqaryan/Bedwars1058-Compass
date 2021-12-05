@@ -1,6 +1,6 @@
 package club.mher.compass.menu.menus.communicationMenus;
 
-import club.mher.compass.CompassPlugin;
+import club.mher.compass.Compass;
 import club.mher.compass.data.MainConfig;
 import club.mher.compass.data.MessagesData;
 import club.mher.compass.menu.Menu;
@@ -46,7 +46,7 @@ public class TeamSelector extends Menu {
         this.team = team;
         this.arena = team.getArena();
         this.path = path;
-        for (String s : CompassPlugin.getMainConfig().getYml().getString(MainConfig.COMMUNICATIONS_MENU_TEAMS+".slots").split(",")) {
+        for (String s : Compass.getMainConfig().getYml().getString(MainConfig.COMMUNICATIONS_MENU_TEAMS+".slots").split(",")) {
             int i;
             try {
                 i = Integer.parseInt(s);
@@ -64,15 +64,15 @@ public class TeamSelector extends Menu {
 
     @Override
     public int getSlots() {
-        return CompassPlugin.getMainConfig().getInt(MainConfig.COMMUNICATIONS_MENU_TEAMS+".size");
+        return Compass.getMainConfig().getInt(MainConfig.COMMUNICATIONS_MENU_TEAMS+".size");
     }
 
     @Override
     public void handleMenu(InventoryClickEvent e) {
         NBTItem nbti = new NBTItem(e.getCurrentItem());
         Player player = (Player) e.getWhoClicked();
-        if (!CompassPlugin.getBedWars().getArenaUtil().isPlaying(player)) return;
-        IArena a = CompassPlugin.getBedWars().getArenaUtil().getArenaByPlayer(player);
+        if (!Compass.getBedWars().getArenaUtil().isPlaying(player)) return;
+        IArena a = Compass.getBedWars().getArenaUtil().getArenaByPlayer(player);
         if (a.isSpectator(player)) return;
         if (team.getMembers().size() <= 1) return;
         switch (nbti.getString("data")) {
@@ -92,17 +92,17 @@ public class TeamSelector extends Menu {
             if (t.getMembers().isEmpty()) continue;
             if (t.equals(team)) continue;
             if (slots.size() <= index) continue;
-            inventory.setItem(slots.get(index), getTeamItem(CompassPlugin.getMainConfig().getItem(player, MainConfig.TRACKER_MENU_TEAM_ITEM, false, null), t));
+            inventory.setItem(slots.get(index), getTeamItem(Compass.getMainConfig().getItem(player, MainConfig.TRACKER_MENU_TEAM_ITEM, false, null), t));
             teamMap.put(slots.get(index), t);
             index++;
         }
-        NBTItem nbtBack = new NBTItem(CompassPlugin.getMainConfig().getItem(player, MainConfig.COMMUNICATIONS_MENU_TEAMS+".back-item", true, "back-item"));
+        NBTItem nbtBack = new NBTItem(Compass.getMainConfig().getItem(player, MainConfig.COMMUNICATIONS_MENU_TEAMS+".back-item", true, "back-item"));
         inventory.setItem(nbtBack.getInteger("slot"), nbtBack.getItem());
     }
 
     private ItemStack getTeamItem(ItemStack itemStack, ITeam team) {
         String displayName = yml.getString(path).replace("{team}", team.getColor().chat() + "§l" + team.getDisplayName(lang));
-        itemStack = CompassPlugin.getBedWars().getVersionSupport().colourItem(itemStack, team);
+        itemStack = Compass.getBedWars().getVersionSupport().colourItem(itemStack, team);
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(TextUtil.colorize(displayName));
         List<String> newLore = new ArrayList<>();

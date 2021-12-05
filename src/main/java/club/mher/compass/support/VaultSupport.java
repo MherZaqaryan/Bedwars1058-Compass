@@ -1,6 +1,6 @@
 package club.mher.compass.support;
 
-import club.mher.compass.CompassPlugin;
+import club.mher.compass.Compass;
 import lombok.Getter;
 import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
@@ -13,7 +13,7 @@ public class VaultSupport {
 
     public boolean setupChat() {
         if (Bukkit.getServer().getPluginManager().getPlugin("Vault") == null) return false;
-        CompassPlugin.getInstance().getLogger().info("Hook into Vault chat support");
+        Compass.getInstance().getLogger().info("Hook into Vault chat support");
         RegisteredServiceProvider<Chat> rsp = Bukkit.getServer().getServicesManager().getRegistration(Chat.class);
         if (rsp == null) return false;
         chat = rsp.getProvider();

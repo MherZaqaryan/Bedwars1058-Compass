@@ -19,9 +19,9 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Level;
 
-public class CompassPlugin extends JavaPlugin {
+public class Compass extends JavaPlugin {
 
-    @Getter private static CompassPlugin instance;
+    @Getter private static Compass instance;
     @Getter private static BedWars bedWars;
     @Getter private static MainConfig mainConfig;
     @Getter private static final HashMap<IArena, HashMap<UUID, ITeam>> trackingArenaMap = new HashMap<>();

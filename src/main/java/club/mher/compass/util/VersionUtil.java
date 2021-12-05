@@ -1,6 +1,6 @@
 package club.mher.compass.util;
 
-import club.mher.compass.CompassPlugin;
+import club.mher.compass.Compass;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -15,7 +15,7 @@ public class VersionUtil {
    }
 
     public static boolean isLegacy() {
-       return Stream.of("1_8","1_9","1_10","1_11","1_12").anyMatch(CompassPlugin.VERSION::contains);
+       return Stream.of("1_8","1_9","1_10","1_11","1_12").anyMatch(Compass.VERSION::contains);
     }
 
 }

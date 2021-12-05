@@ -1,6 +1,6 @@
 package club.mher.compass.data;
 
-import club.mher.compass.CompassPlugin;
+import club.mher.compass.Compass;
 import club.mher.compass.menu.MenuType;
 import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.configuration.ConfigManager;
@@ -17,9 +17,9 @@ public class MainConfig extends ConfigManager {
     public MainConfig(Plugin plugin, String name, String dir) {
         super(plugin, name, dir);
         YamlConfiguration config = getYml();
-        BedWars bw = CompassPlugin.getBedWars();
+        BedWars bw = Compass.getBedWars();
 
-        config.options().header("BedWars1058 Compass Addon By Mher Zaqaryan, Version: " + CompassPlugin.getInstance().getDescription().getVersion());
+        config.options().header("BedWars1058 Compass Addon By Mher Zaqaryan, Version: " + Compass.getInstance().getDescription().getVersion());
 
         config.addDefault(USE_COMMUNICATIONS, true);
         config.addDefault(TRACKER_UPDATE_RATE, 1);

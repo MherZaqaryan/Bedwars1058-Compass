@@ -1,6 +1,6 @@
 package club.mher.compass.menu.menus.communicationMenus;
 
-import club.mher.compass.CompassPlugin;
+import club.mher.compass.Compass;
 import club.mher.compass.data.MainConfig;
 import club.mher.compass.data.MessagesData;
 import club.mher.compass.menu.Menu;
@@ -37,15 +37,15 @@ public class ResourceSelector extends Menu {
 
     @Override
     public int getSlots() {
-        return CompassPlugin.getMainConfig().getInt(MainConfig.COMMUNICATIONS_MENU_RESOURCES+".size");
+        return Compass.getMainConfig().getInt(MainConfig.COMMUNICATIONS_MENU_RESOURCES+".size");
     }
 
     @Override
     public void handleMenu(InventoryClickEvent e) {
         NBTItem nbtItem = new NBTItem(e.getCurrentItem());
         Player player = (Player) e.getWhoClicked();
-        if (!CompassPlugin.getBedWars().getArenaUtil().isPlaying(player)) return;
-        IArena arena = CompassPlugin.getBedWars().getArenaUtil().getArenaByPlayer(player);
+        if (!Compass.getBedWars().getArenaUtil().isPlaying(player)) return;
+        IArena arena = Compass.getBedWars().getArenaUtil().getArenaByPlayer(player);
         if (arena.isSpectator(player)) return;
         switch (nbtItem.getString("data")) {
             case "back-item":
@@ -60,11 +60,11 @@ public class ResourceSelector extends Menu {
     @Override
     public void setMenuItems() {
         for (String s : resources) {
-            NBTItem nbtItem = new NBTItem(CompassPlugin.getMainConfig().getResourceItem(player, s, path));
+            NBTItem nbtItem = new NBTItem(Compass.getMainConfig().getResourceItem(player, s, path));
             inventory.setItem(nbtItem.getInteger("slot"), nbtItem.getItem());
             resourceMap.put(nbtItem.getInteger("slot"), s);
         }
-        NBTItem nbtItem = new NBTItem(CompassPlugin.getMainConfig().getItem(player, MainConfig.COMMUNICATIONS_MENU_RESOURCES+".back-item", true, "back-item"));
+        NBTItem nbtItem = new NBTItem(Compass.getMainConfig().getItem(player, MainConfig.COMMUNICATIONS_MENU_RESOURCES+".back-item", true, "back-item"));
         inventory.setItem(nbtItem.getInteger("slot"), nbtItem.getItem());
     }
 

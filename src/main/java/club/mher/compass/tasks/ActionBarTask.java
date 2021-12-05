@@ -1,6 +1,6 @@
 package club.mher.compass.tasks;
 
-import club.mher.compass.CompassPlugin;
+import club.mher.compass.Compass;
 import club.mher.compass.data.MessagesData;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
@@ -21,17 +21,17 @@ public class ActionBarTask extends BukkitRunnable {
 
     @Override
     public void run() {
-        if (arena.getPlayers().size() <= 1 || !CompassPlugin.getTrackingArenaMap().containsKey(arena) || CompassPlugin.getTrackingTeamMap(arena) == null) {
+        if (arena.getPlayers().size() <= 1 || !Compass.getTrackingArenaMap().containsKey(arena) || Compass.getTrackingTeamMap(arena) == null) {
             cancel();
             return;
         }
-        for (Map.Entry<UUID, ITeam> teamMap : CompassPlugin.getTrackingTeamMap(arena).entrySet()) {
+        for (Map.Entry<UUID, ITeam> teamMap : Compass.getTrackingTeamMap(arena).entrySet()) {
             if (teamMap.getValue() == null) continue;
             Player player = Bukkit.getPlayer(teamMap.getKey());
             if (player == null) continue;
             if (getPlayer(player, teamMap.getValue()) == null) continue;
             player.setCompassTarget(getPlayer(player, teamMap.getValue()).getLocation());
-            CompassPlugin.getBedWars().getVersionSupport().playAction(player, TextUtil.colorize(MessagesData.getYml(player).getString(MessagesData.ACTION_BAR_TRACKING).replace("{target}", getPlayer(player, teamMap.getValue()).getDisplayName()).replace("{distance}", String.valueOf(getMeters(player, teamMap.getValue())))).replace("{teamColor}", "§"+teamMap.getValue().getColor().chat().getChar()));
+            Compass.getBedWars().getVersionSupport().playAction(player, TextUtil.colorize(MessagesData.getYml(player).getString(MessagesData.ACTION_BAR_TRACKING).replace("{target}", getPlayer(player, teamMap.getValue()).getDisplayName()).replace("{distance}", String.valueOf(getMeters(player, teamMap.getValue())))).replace("{teamColor}", "§"+teamMap.getValue().getColor().chat().getChar()));
         }
     }
 

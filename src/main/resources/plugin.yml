@@ -1,4 +1,4 @@
-main: me.mherzaqaryan.compass.CompassPlugin
+main: club.mher.compass.Compass
 name: BedWars1058-Compass
 author: Mher Zaqaryan
 version: ${project.version}

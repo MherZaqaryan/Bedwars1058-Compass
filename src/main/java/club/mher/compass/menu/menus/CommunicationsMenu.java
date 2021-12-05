@@ -1,6 +1,6 @@
 package club.mher.compass.menu.menus;
 
-import club.mher.compass.CompassPlugin;
+import club.mher.compass.Compass;
 import club.mher.compass.data.MainConfig;
 import club.mher.compass.data.MessagesData;
 import com.andrei1058.bedwars.api.arena.IArena;
@@ -33,7 +33,7 @@ public class CommunicationsMenu extends Menu {
 
     @Override
     public int getSlots() {
-        return CompassPlugin.getMainConfig().getInt(MainConfig.COMMUNICATIONS_MENU_SIZE);
+        return Compass.getMainConfig().getInt(MainConfig.COMMUNICATIONS_MENU_SIZE);
     }
 
     @Override
@@ -62,11 +62,11 @@ public class CommunicationsMenu extends Menu {
 
     @Override
     public void setMenuItems() {
-        for (String s : CompassPlugin.getMainConfig().getYml().getConfigurationSection(MainConfig.COMMUNICATIONS_MENU_ITEMS).getKeys(false)) {
-            NBTItem nbtItem = new NBTItem(CompassPlugin.getMainConfig().getCommunicationItem(player, MainConfig.COMMUNICATIONS_MENU_ITEMS+"."+s));
+        for (String s : Compass.getMainConfig().getYml().getConfigurationSection(MainConfig.COMMUNICATIONS_MENU_ITEMS).getKeys(false)) {
+            NBTItem nbtItem = new NBTItem(Compass.getMainConfig().getCommunicationItem(player, MainConfig.COMMUNICATIONS_MENU_ITEMS+"."+s));
             inventory.setItem(nbtItem.getInteger("slot"), nbtItem.getItem());
         }
-        NBTItem backItem = new NBTItem(CompassPlugin.getMainConfig().getItem(player, MainConfig.COMMUNICATIONS_MENU_BACK, true, "back-item"));
+        NBTItem backItem = new NBTItem(Compass.getMainConfig().getItem(player, MainConfig.COMMUNICATIONS_MENU_BACK, true, "back-item"));
         inventory.setItem(backItem.getInteger("slot"), backItem.getItem());
     }
 
