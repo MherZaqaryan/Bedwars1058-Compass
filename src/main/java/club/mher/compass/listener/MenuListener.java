@@ -1,8 +1,8 @@
 package club.mher.compass.listener;
 
+import club.mher.compass.Compass;
 import club.mher.compass.menu.Menu;
 import club.mher.compass.util.NBTItem;
-import com.andrei1058.bedwars.BedWars;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -43,7 +43,7 @@ public class MenuListener implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
         Player player = e.getPlayer();
-        ItemStack item = BedWars.nms.getItemInHand(player);
+        ItemStack item = Compass.getBedWars().getVersionSupport().getItemInHand(player);
         if (item == null) return;
         if (item.getType() == Material.AIR) return;
         String data = new NBTItem(item).getString("data");

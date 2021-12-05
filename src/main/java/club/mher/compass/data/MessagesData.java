@@ -27,6 +27,7 @@ public class MessagesData {
                     yml.addDefault(ACTION_BAR_TRACKING, "&fRastreando a: {teamColor}&l{target} &f- Distancia: &a&l{distance}m");
                     yml.addDefault(TEAM_MESSAGE_FORMAT, "&a&lTEAM > &7{player}: {message}");
                     saveItem(yml, MainConfig.COMPASS_ITEM, "&aBrujula &7(Click Derecho)");
+                    saveItem(yml, MainConfig.TRACKER_SHOP, "&aTracker Shop", "&7Purchase tracking update for","&7your compass which will track","&7each player on a specific team","&7until you die.");
                     yml.addDefault(MAIN_MENU_TITLE, "&7Comunicación rápida y rastreador");
                     saveItem(yml, MainConfig.MAIN_MENU_TRACKER, "&aTienda de rastreadores", "&7Compra la habilidad de rastrear", "&7para tu brújula", "&7rastreando a cada jugador en un", "&7equipo específico hasta", "&7que mueras.", "", "&eClick para abrir!");
                     saveItem(yml, MainConfig.MAIN_MENU_TRACKER_TEAM, "&aTienda de rastreadores", "&7Compra la habilidad de rastrear", "&7para tu brújula", "&7rastreando a cada jugador en un", "&7equipo específico hasta", "&7que mueras.", "", "&eClick para abrir!");
@@ -71,6 +72,7 @@ public class MessagesData {
                     yml.addDefault(ACTION_BAR_TRACKING, "&fОтслеживание: {teamColor}&l{target} &f- дистанция: &a&l{distance}m");
                     yml.addDefault(TEAM_MESSAGE_FORMAT, "&a&lКОМАНДА > &7{player}: {message}");
                     saveItem(yml, MainConfig.COMPASS_ITEM, "&aКомпас &7(ПКМ)");
+                    saveItem(yml, MainConfig.TRACKER_SHOP, "&aTracker Shop", "&7Purchase tracking update for","&7your compass which will track","&7each player on a specific team","&7until you die.");
                     yml.addDefault(MAIN_MENU_TITLE, "&8Трекер и коммуникации");
                     saveItem(yml, MainConfig.MAIN_MENU_TRACKER, "&aМагазин трекеров", "&7Обновление отслеживания покупок", "&7для вашего компаса, который будет", "&7отслеживать каждого игрока на", "&7конкретная команда, пока вы" , "&7умри.", "", "&eНажмите, чтобы открыть!");
                     saveItem(yml, MainConfig.MAIN_MENU_TRACKER_TEAM, "&aМагазин трекеров", "&7Обновление отслеживания покупок", "&7для вашего компаса, который будет", "&7отслеживать каждого игрока на", "&7конкретная команда, пока вы" , "&7умри.", "", "&eНажмите, чтобы открыть!");
@@ -117,6 +119,7 @@ public class MessagesData {
                     yml.addDefault(ACTION_BAR_TRACKING, "&fNamierzanie: {teamColor}&l{target} &f- Dystans: &a&l{distance}m");
                     yml.addDefault(TEAM_MESSAGE_FORMAT, "&a&lDRUŻYNA > &7{player}: {message}");
                     saveItem(yml, MainConfig.COMPASS_ITEM, "&aKompas &7(PRM)");
+                    saveItem(yml, MainConfig.TRACKER_SHOP, "&aTracker Shop", "&7Purchase tracking update for","&7your compass which will track","&7each player on a specific team","&7until you die.");
                     yml.addDefault(MAIN_MENU_TITLE, "&8Namierzanie i komunikacja");
                     saveItem(yml, MainConfig.MAIN_MENU_TRACKER, "&aNamierzanie", "&7Kupując namierzanie drużyny", "&7jesteś przekonany, że", "&7dojdziesz do wroga", "&7Stracisz namierzanie", "&7jeśli umrzesz.", "", "&eKliknij, aby otworzyc!");
                     saveItem(yml, MainConfig.MAIN_MENU_TRACKER_TEAM, "&aNamierzanie", "&7Kupując namierzanie drużyny", "&7jesteś przekonany, że", "&7dojdziesz do wroga", "&7Stracisz namierzanie", "&7jeśli umrzesz.", "", "&eKliknij, aby otworzyc!");
@@ -163,6 +166,7 @@ public class MessagesData {
                     yml.addDefault(ACTION_BAR_TRACKING, "&fUrmaresti: {teamColor}&l{target} &f- Distanta: &a&l{distance}m");
                     yml.addDefault(TEAM_MESSAGE_FORMAT, "&a&lEchipa > &7{player}: {message}");
                     saveItem(yml, MainConfig.COMPASS_ITEM, "&aCompas &7(Click Dreapta)");
+                    saveItem(yml, MainConfig.TRACKER_SHOP, "&aTracker Shop", "&7Purchase tracking update for","&7your compass which will track","&7each player on a specific team","&7until you die.");
                     yml.addDefault(MAIN_MENU_TITLE, "&8Tracker & Communications");
                     saveItem(yml, MainConfig.MAIN_MENU_TRACKER, "&aMagazin de Trackere", "&7Cumpara tracker upgrades", "&7pentru compasul care va", "&7urmarii jucatorii dintr-o", "&7echipa specifica pana cand tu vei", "&7murii.", "", "&eClick sa deschizi!");
                     saveItem(yml, MainConfig.MAIN_MENU_TRACKER_TEAM, "&aMagazin de Trackere", "&7Cumpara tracker upgrades", "&7pentru compasul care va", "&7urmarii jucatorii dintr-o", "&7echipa specifica pana cand tu vei", "&7murii.", "", "&eClick sa deschizi!");
@@ -209,6 +213,7 @@ public class MessagesData {
                     yml.addDefault(ACTION_BAR_TRACKING, "&fTracking: {teamColor}&l{target} &f- Distanza: &a&l{distance}m");
                     yml.addDefault(TEAM_MESSAGE_FORMAT, "&a&lTEAM > &7{player}: {message}");
                     saveItem(yml, MainConfig.COMPASS_ITEM, "&aBussola &7(Click destro)");
+                    saveItem(yml, MainConfig.TRACKER_SHOP, "&aTracker Shop", "&7Purchase tracking update for","&7your compass which will track","&7each player on a specific team","&7until you die.");
                     yml.addDefault(MAIN_MENU_TITLE, "&8Tracker & Comunicazioni");
                     saveItem(yml, MainConfig.MAIN_MENU_TRACKER, "&aAcquista il tracker", "&7Compra l'aggiornamento Tracker", "&7che ci penserà la tua bussola a farlo", "&7Rintraccia ogni giocatore in una", "&7squadra specifica fino alla", "&7tua morte!.", "", "&eClicca per aprire!");
                     saveItem(yml, MainConfig.MAIN_MENU_TRACKER_TEAM, "&aAcquista il tracker", "&7Compra l'aggiornamento Tracker", "&7che ci penserà la tua bussola a farlo", "&7Rintraccia ogni giocatore in una", "&7squadra specifica fino alla", "&7tua morte!.", "", "&eClicca per aprire!");
@@ -254,6 +259,7 @@ public class MessagesData {
                     yml.addDefault(ACTION_BAR_TRACKING, "&fTracking: {teamColor}&l{target} &f- Distance: &a&l{distance}m");
                     yml.addDefault(TEAM_MESSAGE_FORMAT, "&a&lTEAM > &7{player}: {message}");
                     saveItem(yml, MainConfig.COMPASS_ITEM, "&aCompass &7(Right Click)");
+                    saveItem(yml, MainConfig.TRACKER_SHOP, "&aTracker Shop", "&7Purchase tracking update for","&7your compass which will track","&7each player on a specific team","&7until you die.");
                     yml.addDefault(MAIN_MENU_TITLE, "&8Tracker & Communications");
                     saveItem(yml, MainConfig.MAIN_MENU_TRACKER, "&aTracker Shop", "&7Purchase tracking upgrade", "&7for your compass which will", "&7track each player on a", "&7specific team until you", "&7die.", "", "&eClick to open!");
                     saveItem(yml, MainConfig.MAIN_MENU_TRACKER_TEAM, "&aTracker Shop", "&7Purchase tracking upgrade", "&7for your compass which will", "&7track each player on a", "&7specific team until you", "&7die.", "", "&eClick to open!");

@@ -10,6 +10,8 @@ import club.mher.compass.menu.Menu;
 import club.mher.compass.tasks.ActionBarTask;
 import club.mher.compass.util.NBTItem;
 import club.mher.compass.util.TextUtil;
+import com.andrei1058.bedwars.shop.ShopManager;
+import com.andrei1058.bedwars.shop.quickbuy.PlayerQuickBuyCache;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -21,13 +23,11 @@ import java.util.*;
 
 public class TrackerMenu extends Menu {
 
-    YamlConfiguration yml;
-
-    IArena arena;
-
-    List<Integer> slots = new ArrayList<>();
-
-    HashMap<Integer, ITeam> teamSlotMap;
+    private final YamlConfiguration yml;
+    private final IArena arena;
+    private final List<Integer> slots = new ArrayList<>();
+    private final HashMap<Integer, ITeam> teamSlotMap;
+    private boolean backToShop = false;
 
     public TrackerMenu(Player player, IArena arena) {
         super(player);
@@ -62,7 +62,11 @@ public class TrackerMenu extends Menu {
         NBTItem nbtItem = new NBTItem(e.getCurrentItem());
 
         if (nbtItem.getString("data").equals("main-menu")) {
-            new MainMenu(player).open();
+            if (backToShop) {
+                ShopManager.shop.open(player, PlayerQuickBuyCache.getQuickBuyCache(player.getUniqueId()), false);
+            }else {
+                new MainMenu(player).open();
+            }
         }
 
         if (!slots.contains(e.getSlot())) return;
@@ -143,6 +147,10 @@ public class TrackerMenu extends Menu {
             break;
         }
         return bool;
+    }
+
+    public void setBackToShop(boolean b) {
+        this.backToShop = b;
     }
 
 }

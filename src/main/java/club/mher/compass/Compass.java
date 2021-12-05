@@ -1,5 +1,6 @@
 package club.mher.compass;
 
+import club.mher.compass.listener.QuickBuyListener;
 import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
@@ -50,7 +51,7 @@ public class Compass extends JavaPlugin {
         mainConfig = new MainConfig(this, "config", bedWars.getAddonsPath().getPath()+File.separator+"Compass");
         mainConfig.reload();
         new MessagesData();
-        Arrays.asList(new MenuListener(), new GameListener()).forEach(l -> Bukkit.getPluginManager().registerEvents(l, this));
+        Arrays.asList(new MenuListener(), new GameListener(), new QuickBuyListener()).forEach(l -> Bukkit.getPluginManager().registerEvents(l, this));
         getLogger().log(Level.INFO, "Successfully loaded in " + (System.currentTimeMillis() - start) + "ms");
     }
 

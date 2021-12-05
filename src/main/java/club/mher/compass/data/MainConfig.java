@@ -28,69 +28,69 @@ public class MainConfig extends ConfigManager {
         config.addDefault(PLAYER_TRACK_RESOURCE, "EMERALD");
         config.addDefault(MAIN_MENU_SIZE, 27);
 
-        saveItem(COMPASS_ITEM, "COMPASS", false, 8);
-//        config.addDefault(COMPASS_ITEM+".drop-slot", 17);
-        saveItem(MAIN_MENU_TRACKER, "COMPASS", false, 13);
-        saveItem(MAIN_MENU_TRACKER_TEAM, "COMPASS", false, 15);
-        saveItem(MAIN_MENU_COMMUNICATIONS, "EMERALD", false, 11);
+        saveItem(COMPASS_ITEM, "COMPASS", 8);
+        saveItem(TRACKER_SHOP, "COMPASS", 45);
+        saveItem(MAIN_MENU_TRACKER, "COMPASS", 13);
+        saveItem(MAIN_MENU_TRACKER_TEAM, "COMPASS", 15);
+        saveItem(MAIN_MENU_COMMUNICATIONS, "EMERALD", 11);
 
         config.addDefault(TRACKER_MENU_SIZE, 36);
         config.addDefault(TRACKER_MENU_SLOTS, "10,11,12,13,14,15,16,19,20,21,22,23,24,25");
-        saveItem(TRACKER_MENU_TEAM_ITEM, bw.getForCurrentVersion("WOOL", "WOOL", "WHITE_WOOL"), false);
-        saveItem(TRACKER_MENU_BACK_ITEM, "ARROW", false, 31);
+        saveItem(TRACKER_MENU_TEAM_ITEM, bw.getForCurrentVersion("WOOL", "WOOL", "WHITE_WOOL"));
+        saveItem(TRACKER_MENU_BACK_ITEM, "ARROW", 31);
         config.addDefault(COMMUNICATIONS_MENU_SIZE, 45);
-        saveItem(COMMUNICATIONS_MENU_BACK, "ARROW", false, 40);
+        saveItem(COMMUNICATIONS_MENU_BACK, "ARROW", 40);
         config.addDefault(COMMUNICATIONS_MENU_ITEMS, new String[]{});
 
         if (isFirstTime()) {
-            saveCommunicationItem("1", "BOOK", false, 10, MenuType.NONE);
-            saveCommunicationItem("2", "BOOK", false, 11, MenuType.NONE);
-            saveCommunicationItem("3", bw.getForCurrentVersion("IRON_FENCE", "IRON_FENCE", "IRON_BARS"), false, 12, MenuType.NONE);
-            saveCommunicationItem("4", "IRON_SWORD", false, 13, MenuType.TEAM);
-            saveCommunicationItem("5", "DIAMOND", false, 14, MenuType.RESOURCE);
-            saveCommunicationItem("6", "CHEST", false, 15, MenuType.RESOURCE);
-            saveCommunicationItem("7", "BOOK", false, 20, MenuType.NONE);
-            saveCommunicationItem("8", "BOOK", false, 21, MenuType.NONE);
-            saveCommunicationItem("9", bw.getForCurrentVersion("IRON_FENCE", "IRON_FENCE", "IRON_BARS"), false, 22, MenuType.NONE);
-            saveCommunicationItem("10", "IRON_SWORD", false, 23, MenuType.TEAM);
-            saveCommunicationItem("11", "DIAMOND", false, 24, MenuType.RESOURCE);
-            saveCommunicationItem("12", "FEATHER", false, 25, MenuType.NONE);
+            saveCommunicationItem("1", "BOOK", 10, MenuType.NONE);
+            saveCommunicationItem("2", "BOOK", 11, MenuType.NONE);
+            saveCommunicationItem("3", bw.getForCurrentVersion("IRON_FENCE", "IRON_FENCE", "IRON_BARS"), 12, MenuType.NONE);
+            saveCommunicationItem("4", "IRON_SWORD", 13, MenuType.TEAM);
+            saveCommunicationItem("5", "DIAMOND", 14, MenuType.RESOURCE);
+            saveCommunicationItem("6", "CHEST", 15, MenuType.RESOURCE);
+            saveCommunicationItem("7", "BOOK", 20, MenuType.NONE);
+            saveCommunicationItem("8", "BOOK", 21, MenuType.NONE);
+            saveCommunicationItem("9", bw.getForCurrentVersion("IRON_FENCE", "IRON_FENCE", "IRON_BARS"), 22, MenuType.NONE);
+            saveCommunicationItem("10", "IRON_SWORD", 23, MenuType.TEAM);
+            saveCommunicationItem("11", "DIAMOND", 24, MenuType.RESOURCE);
+            saveCommunicationItem("12", "FEATHER", 25, MenuType.NONE);
         }
 
         config.addDefault(COMMUNICATIONS_MENU_TEAMS + ".size", 36);
         config.addDefault(COMMUNICATIONS_MENU_TEAMS + ".slots", "10,11,12,13,14,15,16,19,20,21,22,23,24,25");
-        saveItem(COMMUNICATIONS_MENU_TEAMS + ".back-item", "ARROW", false, 31);
+        saveItem(COMMUNICATIONS_MENU_TEAMS + ".back-item", "ARROW", 31);
         config.addDefault(COMMUNICATIONS_MENU_RESOURCES + ".size", 36);
-        saveItem(COMMUNICATIONS_MENU_RESOURCES + ".back-item", "ARROW", false, 31);
-        saveResource(COMMUNICATIONS_MENU_RESOURCES + ".iron", "IRON_INGOT", false, 12);
-        saveResource(COMMUNICATIONS_MENU_RESOURCES + ".gold", "GOLD_INGOT", false, 14);
-        saveResource(COMMUNICATIONS_MENU_RESOURCES +".diamond", "DIAMOND", false, 10);
-        saveResource(COMMUNICATIONS_MENU_RESOURCES + ".emerald", "EMERALD", false, 16);
+        saveItem(COMMUNICATIONS_MENU_RESOURCES + ".back-item", "ARROW", 31);
+        saveResource(COMMUNICATIONS_MENU_RESOURCES + ".iron", "IRON_INGOT", 12);
+        saveResource(COMMUNICATIONS_MENU_RESOURCES + ".gold", "GOLD_INGOT", 14);
+        saveResource(COMMUNICATIONS_MENU_RESOURCES +".diamond", "DIAMOND", 10);
+        saveResource(COMMUNICATIONS_MENU_RESOURCES + ".emerald", "EMERALD", 16);
         config.options().copyDefaults(true);
         save();
     }
 
-    private void saveResource(String path, String material, boolean enchanted, int slot) {
+    private void saveResource(String path, String material, int slot) {
         getYml().addDefault(path + ".material", material);
-        getYml().addDefault(path + ".enchanted", enchanted);
+        getYml().addDefault(path + ".enchanted", false);
         getYml().addDefault(path + ".slot", slot);
     }
 
-    private void saveItem(String path, String material, boolean enchanted, int slot) {
+    private void saveItem(String path, String material, int slot) {
         getYml().addDefault(path + ".material", material);
-        getYml().addDefault(path + ".enchanted", enchanted);
+        getYml().addDefault(path + ".enchanted", false);
         getYml().addDefault(path + ".slot", slot);
     }
 
-    private void saveItem(String path, String material, boolean enchanted) {
+    private void saveItem(String path, String material) {
         getYml().addDefault(path + ".material", material);
-        getYml().addDefault(path + ".enchanted", enchanted);
+        getYml().addDefault(path + ".enchanted", false);
     }
 
-    private void saveCommunicationItem(String path, String material, boolean enchanted, int slot, MenuType menuType) {
+    private void saveCommunicationItem(String path, String material, int slot, MenuType menuType) {
         path = COMMUNICATIONS_MENU_ITEMS + "." + path;
         getYml().addDefault(path + ".material", material);
-        getYml().addDefault(path + ".enchanted", enchanted);
+        getYml().addDefault(path + ".enchanted", false);
         getYml().addDefault(path + ".slot", slot);
         getYml().addDefault(path + ".menu", menuType.toString());
     }
@@ -130,6 +130,7 @@ public class MainConfig extends ConfigManager {
     public static final String
             USE_COMMUNICATIONS = "use-quick-communications",
             COMPASS_ITEM = "compass-item",
+            TRACKER_SHOP = "tracker-shop",
             MAIN_MENU_SIZE = "menus.main-menu.size",
             MAIN_MENU_TRACKER = "menus.main-menu.tracker",
             MAIN_MENU_TRACKER_TEAM = "menus.main-menu.tracker-team",

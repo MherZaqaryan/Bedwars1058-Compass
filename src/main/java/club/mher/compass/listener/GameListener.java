@@ -10,7 +10,6 @@ import com.andrei1058.bedwars.api.events.gameplay.GameStateChangeEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerKillEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerLeaveArenaEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerReSpawnEvent;
-import com.andrei1058.bedwars.arena.Arena;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -43,7 +42,7 @@ public class GameListener implements Listener {
     @EventHandler
     public void onKill(PlayerDeathEvent e) {
         Player player = e.getEntity();
-        if (!Arena.isInArena(player)) return;
+        if (!Compass.getBedWars().getArenaUtil().isPlaying(player)) return;
         NBTItem nbti = new NBTItem(Compass.getMainConfig().getItem(player, MainConfig.COMPASS_ITEM, true, "compass-item"));
         e.getDrops().remove(nbti.getItem());
     }
