@@ -31,7 +31,7 @@ public class CompassMenuCommand extends SubCommand {
             if (args.length == 0) {
                 if (!player.hasPermission("bw.compass.reload")) return true;
                 Arrays.asList(
-                    TextUtil.msgHoverClick("&6BedWars1058 Compass Addon " + Compass.PLUGIN_VERSION + " &7- &cAdmin Commands", "&7Author: &cMrIronMan", "https://www.spigotmc.org/resources/91537/", ClickEvent.Action.OPEN_URL),
+                    TextUtil.msgHoverClick("&8&lþ &6BedWars1058 Compass v" + Compass.PLUGIN_VERSION + " &7- &cAdmin Commands", "&7Author: &cMher Zaqaryan", "https://www.spigotmc.org/resources/91537/", ClickEvent.Action.OPEN_URL),
                     TextUtil.blank(),
                     TextUtil.msgHoverClick(" &6▪ &7/bw compass menu &8- &eTo open compass menu", "&7Click to open the compass menu.", "/bw compass menu", ClickEvent.Action.RUN_COMMAND),
                     TextUtil.msgHoverClick(" &6▪ &7/bw compass reload &8- &eTo reload compass configuration", "&7Click to reload configuration file\n&8Path: plugins/BedWars1058/Compass/config.yml", "/bw compass reload", ClickEvent.Action.RUN_COMMAND)
