@@ -1,6 +1,7 @@
 package club.mher.compass;
 
 import club.mher.compass.listener.QuickBuyListener;
+import club.mher.compass.support.bstats.Metrics;
 import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
@@ -10,7 +11,7 @@ import club.mher.compass.data.MainConfig;
 import club.mher.compass.data.MessagesData;
 import club.mher.compass.listener.GameListener;
 import club.mher.compass.listener.MenuListener;
-import club.mher.compass.support.VaultSupport;
+import club.mher.compass.support.vault.VaultSupport;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 

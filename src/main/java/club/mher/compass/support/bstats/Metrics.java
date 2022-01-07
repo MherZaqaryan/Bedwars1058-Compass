@@ -1,4 +1,4 @@
-package club.mher.compass;
+package club.mher.compass.support.bstats;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;

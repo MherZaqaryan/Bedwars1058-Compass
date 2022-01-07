@@ -1,4 +1,4 @@
-package club.mher.compass.support;
+package club.mher.compass.support.vault;
 
 import club.mher.compass.Compass;
 import lombok.Getter;
