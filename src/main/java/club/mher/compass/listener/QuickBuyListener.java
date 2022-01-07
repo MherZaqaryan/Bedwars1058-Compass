@@ -13,30 +13,27 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class QuickBuyListener implements Listener {
 
     @EventHandler
     public void onShop(InventoryOpenEvent e) {
-        Inventory inv = e.getInventory();
         Player player = (Player) e.getPlayer();
-        if (!isShop(player, inv)) {
+        if (!isShop(player, e.getView().getTitle())) {
             return;
         }
         NBTItem item = new NBTItem(Compass.getMainConfig().getItem(player, MainConfig.TRACKER_SHOP, true, "tracker-shop"));
-        inv.setItem(item.getInteger("slot"), item.getItem());
+        e.getInventory().setItem(item.getInteger("slot"), item.getItem());
     }
 
     @EventHandler
     public void onClick(InventoryClickEvent e) {
-        Inventory inv = e.getInventory();
         Player player = (Player) e.getWhoClicked();
         if (!Compass.getBedWars().getArenaUtil().isPlaying(player)) {
             return;
         }
-        if (!isShop(player, inv)) {
+        if (!isShop(player, e.getView().getTitle())) {
             return;
         }
         ItemStack is = e.getCurrentItem();
@@ -51,11 +48,7 @@ public class QuickBuyListener implements Listener {
         tm.open();
     }
 
-    private boolean isShop(Player player, Inventory inventory) {
-        String title;
-        if ((title = inventory.getName()) == null) {
-            return false;
-        }
+    private boolean isShop(Player player, String title) {
         return title.equalsIgnoreCase(Language.getMsg(player, Messages.SHOP_INDEX_NAME));
     }
 
