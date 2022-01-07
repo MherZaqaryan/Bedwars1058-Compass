@@ -4,6 +4,8 @@ import com.andrei1058.bedwars.api.language.Language;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
+
 public class MessagesData {
 
     public final static String PATH = "addons.compass.";
@@ -16,6 +18,51 @@ public class MessagesData {
         for (Language l : Language.getLanguages()) {
             YamlConfiguration yml = l.getYml();
             switch (l.getIso()) {
+                // By Sxhqil (Persian)
+                case "fa":
+                    yml.addDefault(NOT_ALL_BEDS_DESTROYED, "&cHich Kodoom Az Bed Haye Doshman Kharab Nashode!");
+                    yml.addDefault(PURCHASED, "&cShoma In Ghabeliat Ro Az Dast Midid Age Bemirid Va Dige Nemitoonid Track Konid!");
+                    yml.addDefault(NOT_ENOUGH_RESOURCE, "&cShoma Resource Haye Kafy Baraye In Kar Ro Nadarid!");
+                    yml.addDefault(ALREADY_TRACKING, "&cShoma Az Ghabl In Team Ro Track Kardid!");
+                    yml.addDefault(STATUS_NOT_ENOUGH, "&cShoma Resource Kafy Nadarid!");
+                    yml.addDefault(STATUS_LOCKED, "&cVaqty Baz Mishe Ke Hameye Bed Haye Harif Hatoon Kharab She");
+                    yml.addDefault(STATUS_UNLOCKED, "&eClick Kon Ta Bekhary!");
+                    yml.addDefault(ACTION_BAR_TRACKING, "&fTracking: {teamColor}&l{target} &f- Distance: &a&l{distance}m");
+                    yml.addDefault(TEAM_MESSAGE_FORMAT, "&a&lTEAM > &7{player}: {message}");
+                    saveItem(yml, MainConfig.COMPASS_ITEM, "&aCompass &7(Rast Click)");
+                    saveItem(yml, MainConfig.TRACKER_SHOP, "&aForooshgahe Tracker ", "&7Yek Tracker Bekhar Ta","&7Az Compasset Baraye Track Kardane","&7Harif Estefade Kon","&7In Ghabeliat Ta Vaqty Hast Ke Bemiri");
+                    yml.addDefault(MAIN_MENU_TITLE, "&8Tracker & Communications");
+                    saveItem(yml, MainConfig.MAIN_MENU_TRACKER, "&aForooshgahe Tracker ", "&7Yek Tracker Bekhar Ta","&7Az Compasset Baraye Track Kardane","&7Harif Estefade Kon","&7In Ghabeliat Ta Vaqty Hast Ke Bemiri", "", "&eClick Kon Ta Baz She!");
+                    saveItem(yml, MainConfig.MAIN_MENU_TRACKER_TEAM, "&aForooshgahe Tracker ", "&7Yek Tracker Bekhar Ta","&7Az Compasset Baraye Track Kardane","&7Harif Estefade Kon","&7In Ghabeliat Ta Vaqty Hast Ke Bemiri", "", "&eClick Kon Ta Baz She!");
+                    saveItem(yml, MainConfig.MAIN_MENU_COMMUNICATIONS, "&aQuick Communications", "&7Yek Payame Moshkhas Shode", "&7Baraye Ham Teami Yat Befres!", "", "&eClick Kon Ta Baz She!");
+                    yml.addDefault(TRACKER_MENU_TITLE, "&8Kharide Enemy Tracker");
+                    saveItem(yml, MainConfig.TRACKER_MENU_TEAM_ITEM, "&cTrack Kardane Teame {team}", "&7Yek Tracker Bekhar Ta","&7Az Compasset Baraye Track Kardane","&7Harif Estefade Kon","&7In Ghabeliat Ta Vaqty Hast Ke Bemiri", "", "&7Cost: &22 Emeralds", "", "{status}");
+                    saveItem(yml, MainConfig.TRACKER_MENU_BACK_ITEM, "&aBargasht", "&7Be Tracker & Communication");
+                    yml.addDefault(COMMUNICATIONS_MENU_TITLE, "&8Ertebate Sarry!");
+                    saveItem(yml, MainConfig.COMMUNICATIONS_MENU_BACK, "&aBargasht", "&7Be Tracker & Communication");
+                    if (yml.getString(PATH + MainConfig.COMMUNICATIONS_MENU_ITEMS) == null) {
+                        saveCommunicationItem(yml, "1", "&aSalam ( ﾟ◡ﾟ)/!", "&aSalam ( ﾟ◡ﾟ)/!", "", "&eClick Kon Ta Befresty!");
+                        saveCommunicationItem(yml, "2", "&aDaram Be Base Barmigardam", "&aDaram Be Base Barmigardam", "", "&eClick Kon Ta Befresty!");
+                        saveCommunicationItem(yml, "3", "&aDaram Defa Mikonam!", "&aDaram Defa Mikonam!", "", "&eClick Kon Ta Befresty!");
+                        saveCommunicationItem(yml, "4", "&aDaram Rush Midam Be Teame {team}", "&aDaram Rush Midam!", "&7Shoma In Ghabeliat Ro Darid Ke", "&7Yek Team Ro Entekhab Konid", "", "&eClick Kon Ta Befresty!");
+                        saveCommunicationItem(yml, "5", "&aDaram {resource} &aJam Mikonam", "&aDaram Resource Jam Mikonam!", "&7Shoma In Ghabeliat Ro Darid Ke", "&7Resource Ro Entekhab Konid", "", "&eClick Kon Ta Befresty!");
+                        saveCommunicationItem(yml, "6", "&7{resource} &aGereftam", "&aResource Gereftam!", "&7Shoma In Ghabeliat Ro Darid Ke", "&7Resource Ro Entekhab Konid", "", "&eClick Kon Ta Befresty!");
+                        saveCommunicationItem(yml, "7", "&aMamnoon", "&aMamnoon!", "", "&eClick Kon Ta Befresty!");
+                        saveCommunicationItem(yml, "8", "&aBargard Be Base", "&aBargard Be Base!", "", "&eClick Kon Ta Befresty!");
+                        saveCommunicationItem(yml, "9", "&aLotfan Defa Kon!", "&aLotfan Defa Kon!", "", "&eClick Kon Ta Befresty!");
+                        saveCommunicationItem(yml, "10", "&aBerim Be {team} &aHamle Konim", "&aBerim Rush Bedim!", "&7Shoma In Ghabeliat Ro Darid Ke", "&7Yek Team Ro Entekhab Konid", "", "&eClick Kon Ta Befresty!");
+                        saveCommunicationItem(yml, "11", "&aMa Be {resource} &aNiaz Darim.", "&aBe Resource Niaz Darim!", "&7Shoma In Ghabeliat Ro Darid Ke", "&7Resource Ro Entekhab Konid", "", "&eClick Kon Ta Befresty!");
+                        saveCommunicationItem(yml, "12", "&aYe Player Dare Miad!", "&aPlayer Dare Miad!!", "", "&eClick Kon Ta Befresty!");
+                    }
+                    yml.addDefault(COMMUNICATIONS_MENU_LORE, Arrays.asList("&7Click Kon Ta Payam Ro Befresty: '{message}&7'", "&7Be Hamtimiat!", "", "&eClick Kon Ta Befresty!"));
+                    yml.addDefault(COMMUNICATIONS_MENU_TEAMS_TITLE, "&8Select an option:");
+                    saveItem(yml, MainConfig.COMMUNICATIONS_MENU_TEAMS + ".back-item", "&aBargasht", "&7Be Quick Communications");
+                    yml.addDefault(COMMUNICATIONS_MENU_RESOURCES_TITLE, "&8Select an option:");
+                    saveItem(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".back-item", "&aBargasht", "&7Be Quick Communications");
+                    saveResource(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".iron", "&f&lIRON");
+                    saveResource(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".gold", "&6&lGOLD");
+                    saveResource(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".diamond", "&b&lDIAMOND");
+                    saveResource(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".emerald", "&2&lEMERALD");
                 case "es":
                     yml.addDefault(NOT_ALL_BEDS_DESTROYED, "&cNo todos los enemigos tienen la cama destruida!");
                     yml.addDefault(PURCHASED, "&cPerderás la habilidad de rastrear a este equipo cuando mueras!");
