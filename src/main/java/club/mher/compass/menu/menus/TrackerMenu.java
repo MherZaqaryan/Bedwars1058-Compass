@@ -121,9 +121,11 @@ public class TrackerMenu extends Menu {
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemStack = Compass.getBedWars().getVersionSupport().colourItem(itemStack, team);
         itemMeta.setDisplayName(TextUtil.colorize(itemMeta.getDisplayName().replace("{team}", team.getDisplayName(Compass.getBedWars().getPlayerLanguage(player)))));
-        List<String> newLore = new ArrayList<>();
-        itemMeta.getLore().forEach(s -> newLore.add(TextUtil.colorize(s.replace("{status}", getStatus(player, arena)))));
-        itemMeta.setLore(newLore);
+        if (itemMeta.hasLore()) {
+            List<String> newLore = new ArrayList<>();
+            itemMeta.getLore().forEach(s -> newLore.add(TextUtil.colorize(s.replace("{status}", getStatus(player, arena)))));
+            itemMeta.setLore(newLore);
+        }
         itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
