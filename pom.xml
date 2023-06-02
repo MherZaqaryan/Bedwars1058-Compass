@@ -46,8 +46,8 @@
         </dependency>
         <dependency>
             <groupId>com.andrei1058.bedwars</groupId>
-            <artifactId>bedwars-plugin</artifactId>
-            <version>22.7</version>
+            <artifactId>BedWars1058</artifactId>
+            <version>23.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
