@@ -1,10 +1,11 @@
-package club.mher.compass.tasks;
+package club.mher.compass.tasks.bw2023;
 
-import club.mher.compass.Compass;
-import club.mher.compass.data.MessagesData;
-import com.andrei1058.bedwars.api.arena.IArena;
-import com.andrei1058.bedwars.api.arena.team.ITeam;
+import club.mher.compass.data.bw1058.MessagesData;
+import club.mher.compass.support.BW2023;
 import club.mher.compass.util.TextUtil;
+import com.tomkeuper.bedwars.api.BedWars;
+import com.tomkeuper.bedwars.api.arena.IArena;
+import com.tomkeuper.bedwars.api.arena.team.ITeam;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -13,19 +14,21 @@ import java.util.*;
 
 public class ActionBarTask extends BukkitRunnable {
 
+    private final BedWars bedWars;
     private final IArena arena;
 
-    public ActionBarTask(IArena arena) {
+    public ActionBarTask(BedWars bedWars, IArena arena) {
+        this.bedWars = bedWars;
         this.arena = arena;
     }
 
     @Override
     public void run() {
-        if (arena.getPlayers().size() <= 1 || !Compass.getTrackingArenaMap().containsKey(arena) || Compass.getTrackingTeamMap(arena) == null) {
+        if (arena.getPlayers().size() <= 1 || !BW2023.getTrackingArenaMap().containsKey(arena) || BW2023.getTrackingTeamMap(arena) == null) {
             this.cancel();
             return;
         }
-        for (Map.Entry<UUID, ITeam> teamMap : Compass.getTrackingTeamMap(arena).entrySet()) {
+        for (Map.Entry<UUID, ITeam> teamMap : BW2023.getTrackingTeamMap(arena).entrySet()) {
             if (teamMap.getValue() == null) {
                 continue;
             }
@@ -37,7 +40,7 @@ public class ActionBarTask extends BukkitRunnable {
                 continue;
             }
             player.setCompassTarget(getPlayer(player, teamMap.getValue()).getLocation());
-            Compass.getBedWars().getVersionSupport().playAction(player, TextUtil.colorize(MessagesData.getYml(player).getString(MessagesData.ACTION_BAR_TRACKING).replace("{target}", getPlayer(player, teamMap.getValue()).getDisplayName()).replace("{distance}", String.valueOf(getMeters(player, teamMap.getValue())))).replace("{teamColor}", "§"+teamMap.getValue().getColor().chat().getChar()));
+            bedWars.getVersionSupport().playAction(player, TextUtil.colorize(MessagesData.getYml(player).getString(MessagesData.ACTION_BAR_TRACKING).replace("{target}", getPlayer(player, teamMap.getValue()).getDisplayName()).replace("{distance}", String.valueOf(getMeters(player, teamMap.getValue())))).replace("{teamColor}", "§"+teamMap.getValue().getColor().chat().getChar()));
         }
     }
 

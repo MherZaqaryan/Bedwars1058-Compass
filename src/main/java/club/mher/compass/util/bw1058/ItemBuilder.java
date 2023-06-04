@@ -1,10 +1,13 @@
-package club.mher.compass.util;
+package club.mher.compass.util.bw1058;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import club.mher.compass.util.TextUtil;
+import club.mher.compass.util.VersionUtil;
+import com.andrei1058.bedwars.api.BedWars;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -17,9 +20,11 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 public class ItemBuilder {
 
+    private final BedWars bedWars;
     private ItemStack is;
 
-    public ItemBuilder(String material) {
+    public ItemBuilder(BedWars bedWars, String material) {
+        this.bedWars = bedWars;
         String[] args = material.split(":");
         if (args.length == 2) {
             if (VersionUtil.isLegacy())
@@ -29,15 +34,17 @@ public class ItemBuilder {
         else is = new ItemStack(Material.valueOf(material));
     }
 
-    public ItemBuilder(Material m){
-        this(m, 1);
+    public ItemBuilder(Material m, BedWars bedWars){
+        this(bedWars, m, 1);
     }
 
-    public ItemBuilder(ItemStack is){
+    public ItemBuilder(BedWars bedWars, ItemStack is){
+        this.bedWars = bedWars;
         this.is = is;
     }
 
-    public ItemBuilder(Material m, int data){
+    public ItemBuilder(BedWars bedWars, Material m, int data){
+        this.bedWars = bedWars;
         is = new ItemStack(m, 1, (byte) data);
     }
 
@@ -161,14 +168,14 @@ public class ItemBuilder {
     }
 
     public ItemBuilder addTag(String key, String value) {
-        NBTItem item = new NBTItem(is);
+        NBTItem item = new NBTItem(bedWars, is);
         item.setString(key, value);
         this.is = item.getItem();
         return this;
     }
 
     public ItemBuilder addTag(String key, Integer value) {
-        NBTItem item = new NBTItem(is);
+        NBTItem item = new NBTItem(bedWars, is);
         item.setInteger(key, value);
         this.is = item.getItem();
         return this;

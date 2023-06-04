@@ -1,8 +1,11 @@
-package club.mher.compass.util;
+package club.mher.compass.util.bw1058;
 
 import club.mher.compass.Compass;
-import club.mher.compass.data.MainConfig;
-import club.mher.compass.data.MessagesData;
+import club.mher.compass.data.bw1058.MainConfig;
+import club.mher.compass.data.bw1058.MessagesData;
+import club.mher.compass.support.BW1058;
+import club.mher.compass.util.TextUtil;
+import club.mher.compass.util.VersionUtil;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
 import com.andrei1058.bedwars.api.language.Language;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -19,7 +22,7 @@ public class MessagingUtil {
             if (Compass.isUsingVaultChat()) formatted = Compass.getVault().setPlaceholders(formatted, player);
             if (Compass.isUsingPapi()) formatted = PlaceholderAPI.setPlaceholders(player, formatted);
             p.sendMessage(TextUtil.colorize(formatted));
-            VersionUtil.playSound(p, Compass.getMainConfig().getString(MainConfig.MESSAGE_SEND_SOUND));
+            VersionUtil.playSound(p, BW1058.getMainConfig().getString(MainConfig.MESSAGE_SEND_SOUND));
         });
     }
 
@@ -31,7 +34,7 @@ public class MessagingUtil {
             if (Compass.isUsingVaultChat()) formatted = Compass.getVault().setPlaceholders(formatted, player);
             if (Compass.isUsingPapi()) formatted = PlaceholderAPI.setPlaceholders(player, formatted);
             p.sendMessage(TextUtil.colorize(formatted));
-            VersionUtil.playSound(p, Compass.getMainConfig().getString(MainConfig.MESSAGE_SEND_SOUND));
+            VersionUtil.playSound(p, BW1058.getMainConfig().getString(MainConfig.MESSAGE_SEND_SOUND));
         });
     }
 
@@ -44,7 +47,7 @@ public class MessagingUtil {
             if (Compass.isUsingVaultChat()) formatted = Compass.getVault().setPlaceholders(formatted, player);
             if (Compass.isUsingPapi()) formatted = PlaceholderAPI.setPlaceholders(player, formatted);
             p.sendMessage(TextUtil.colorize(formatted));
-            VersionUtil.playSound(p, Compass.getMainConfig().getString(MainConfig.MESSAGE_SEND_SOUND));
+            VersionUtil.playSound(p, BW1058.getMainConfig().getString(MainConfig.MESSAGE_SEND_SOUND));
         });
     }
 

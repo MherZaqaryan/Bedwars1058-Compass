@@ -1,12 +1,14 @@
-package club.mher.compass.command;
+package club.mher.compass.command.bw2023;
 
 import club.mher.compass.Compass;
-import club.mher.compass.menu.menus.MainMenu;
-import com.andrei1058.bedwars.api.arena.GameState;
-import com.andrei1058.bedwars.api.arena.IArena;
-import com.andrei1058.bedwars.api.command.ParentCommand;
-import com.andrei1058.bedwars.api.command.SubCommand;
+import club.mher.compass.menu.menus.bw2023.MainMenu;
+import club.mher.compass.support.BW2023;
 import club.mher.compass.util.TextUtil;
+import com.tomkeuper.bedwars.api.BedWars;
+import com.tomkeuper.bedwars.api.arena.GameState;
+import com.tomkeuper.bedwars.api.arena.IArena;
+import com.tomkeuper.bedwars.api.command.ParentCommand;
+import com.tomkeuper.bedwars.api.command.SubCommand;
 import net.md_5.bungee.api.chat.ClickEvent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -16,8 +18,11 @@ import java.util.List;
 
 public class CompassMenuCommand extends SubCommand {
 
-    public CompassMenuCommand(ParentCommand parent, String name) {
+    private final BedWars bedWars;
+
+    public CompassMenuCommand(BedWars bedWars, ParentCommand parent, String name, BedWars bedWars1) {
         super(parent, name);
+        this.bedWars = bedWars1;
         showInList(true);
         setDisplayInfo(TextUtil.msgHoverClick(" &6▪ &7/bw compass &8- &eTo see commands list", "Click to see all list of commands", "/bw compass", ClickEvent.Action.RUN_COMMAND));
         setPriority(14);
@@ -38,15 +43,15 @@ public class CompassMenuCommand extends SubCommand {
                 ).forEach(player.spigot()::sendMessage);
             }else if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("menu")) {
-                    if (!Compass.getBedWars().getArenaUtil().isPlaying(player)) return true;
-                    IArena arena = Compass.getBedWars().getArenaUtil().getArenaByPlayer(player);
+                    if (!bedWars.getArenaUtil().isPlaying(player)) return true;
+                    IArena arena = bedWars.getArenaUtil().getArenaByPlayer(player);
                     if (!arena.getStatus().equals(GameState.playing)) return true;
                     if (arena.isSpectator(player)) return true;
-                    new MainMenu(player).open();
+                    new MainMenu(bedWars, player).open();
                 }
                 else if (args[0].equalsIgnoreCase("reload")) {
                     if (player.hasPermission("bw.compass.reload")) {
-                        Compass.getMainConfig().reload();
+                        BW2023.getMainConfig().reload();
                         player.sendMessage(TextUtil.colorize("&aConfiguration file has been reloaded."));
                     }
                 }

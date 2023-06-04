@@ -1,14 +1,15 @@
-package club.mher.compass.menu.menus.communicationMenus;
+package club.mher.compass.menu.menus.bw1058.communicationMenus;
 
-import club.mher.compass.Compass;
-import club.mher.compass.data.MainConfig;
-import club.mher.compass.data.MessagesData;
+import club.mher.compass.data.bw1058.MainConfig;
+import club.mher.compass.data.bw1058.MessagesData;
 import club.mher.compass.menu.Menu;
-import club.mher.compass.menu.menus.CommunicationsMenu;
+import club.mher.compass.menu.menus.bw1058.CommunicationsMenu;
+import club.mher.compass.support.BW1058;
+import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
-import club.mher.compass.util.MessagingUtil;
-import club.mher.compass.util.NBTItem;
+import club.mher.compass.util.bw1058.MessagingUtil;
+import club.mher.compass.util.bw1058.NBTItem;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -17,14 +18,16 @@ import java.util.HashMap;
 
 public class ResourceSelector extends Menu {
 
+    private final BedWars bedWars;
     final YamlConfiguration yml;
     final String path;
     final ITeam team;
     final String[] resources = {"iron", "gold", "diamond", "emerald"};
     final HashMap<Integer, String> resourceMap = new HashMap<>();
 
-    public ResourceSelector(Player player, ITeam team, String path) {
+    public ResourceSelector(BedWars bedWars, Player player, ITeam team, String path) {
         super(player);
+        this.bedWars = bedWars;
         this.team = team;
         this.path = path;
         this.yml = MessagesData.getYml(player);
@@ -37,19 +40,19 @@ public class ResourceSelector extends Menu {
 
     @Override
     public int getSlots() {
-        return Compass.getMainConfig().getInt(MainConfig.COMMUNICATIONS_MENU_RESOURCES+".size");
+        return BW1058.getMainConfig().getInt(MainConfig.COMMUNICATIONS_MENU_RESOURCES+".size");
     }
 
     @Override
     public void handleMenu(InventoryClickEvent e) {
-        NBTItem nbtItem = new NBTItem(e.getCurrentItem());
+        NBTItem nbtItem = new NBTItem(bedWars, e.getCurrentItem());
         Player player = (Player) e.getWhoClicked();
-        if (!Compass.getBedWars().getArenaUtil().isPlaying(player)) return;
-        IArena arena = Compass.getBedWars().getArenaUtil().getArenaByPlayer(player);
+        if (!bedWars.getArenaUtil().isPlaying(player)) return;
+        IArena arena = bedWars.getArenaUtil().getArenaByPlayer(player);
         if (arena.isSpectator(player)) return;
         switch (nbtItem.getString("data")) {
             case "back-item":
-                new CommunicationsMenu(player, team.getArena()).open();
+                new CommunicationsMenu(bedWars, player, team.getArena()).open();
                 break;
             case "resource-item":
                 MessagingUtil.resourceMessage(player, team, nbtItem.getString("path"), resourceMap.get(e.getSlot()));
@@ -60,11 +63,11 @@ public class ResourceSelector extends Menu {
     @Override
     public void setMenuItems() {
         for (String s : resources) {
-            NBTItem nbtItem = new NBTItem(Compass.getMainConfig().getResourceItem(player, s, path));
+            NBTItem nbtItem = new NBTItem(bedWars, BW1058.getMainConfig().getResourceItem(player, s, path));
             inventory.setItem(nbtItem.getInteger("slot"), nbtItem.getItem());
             resourceMap.put(nbtItem.getInteger("slot"), s);
         }
-        NBTItem nbtItem = new NBTItem(Compass.getMainConfig().getItem(player, MainConfig.COMMUNICATIONS_MENU_RESOURCES+".back-item", true, "back-item"));
+        NBTItem nbtItem = new NBTItem(bedWars, BW1058.getMainConfig().getItem(player, MainConfig.COMMUNICATIONS_MENU_RESOURCES+".back-item", true, "back-item"));
         inventory.setItem(nbtItem.getInteger("slot"), nbtItem.getItem());
     }
 

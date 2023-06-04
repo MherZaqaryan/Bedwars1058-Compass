@@ -1,15 +1,16 @@
-package club.mher.compass.listener;
+package club.mher.compass.listener.bw2023;
 
-import club.mher.compass.Compass;
-import club.mher.compass.data.MainConfig;
-import club.mher.compass.util.NBTItem;
-import com.andrei1058.bedwars.api.arena.GameState;
-import com.andrei1058.bedwars.api.arena.IArena;
-import com.andrei1058.bedwars.api.arena.team.ITeam;
-import com.andrei1058.bedwars.api.events.gameplay.GameStateChangeEvent;
-import com.andrei1058.bedwars.api.events.player.PlayerKillEvent;
-import com.andrei1058.bedwars.api.events.player.PlayerLeaveArenaEvent;
-import com.andrei1058.bedwars.api.events.player.PlayerReSpawnEvent;
+import club.mher.compass.data.bw1058.MainConfig;
+import club.mher.compass.support.BW2023;
+import club.mher.compass.util.bw2023.NBTItem;
+import com.tomkeuper.bedwars.api.BedWars;
+import com.tomkeuper.bedwars.api.arena.GameState;
+import com.tomkeuper.bedwars.api.arena.IArena;
+import com.tomkeuper.bedwars.api.arena.team.ITeam;
+import com.tomkeuper.bedwars.api.events.gameplay.GameStateChangeEvent;
+import com.tomkeuper.bedwars.api.events.player.PlayerKillEvent;
+import com.tomkeuper.bedwars.api.events.player.PlayerLeaveArenaEvent;
+import com.tomkeuper.bedwars.api.events.player.PlayerReSpawnEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,29 +22,34 @@ import org.bukkit.inventory.ItemStack;
 import java.util.UUID;
 
 public class GameListener implements Listener {
+    private final BedWars bedWars;
+
+    public GameListener(BedWars bedWars) {
+        this.bedWars = bedWars;
+    }
 
     @EventHandler
     public void onServerQuit(PlayerQuitEvent e) {
         Player player = e.getPlayer();
         UUID uuid = player.getUniqueId();
-        if (!Compass.getBedWars().getArenaUtil().isPlaying(player)) return;
-        IArena arena = Compass.getBedWars().getArenaUtil().getArenaByPlayer(player);
-        if (!Compass.isTracking(arena, uuid)) return;
-        Compass.removeTrackingTeam(arena, uuid);
+        if (!bedWars.getArenaUtil().isPlaying(player)) return;
+        IArena arena = bedWars.getArenaUtil().getArenaByPlayer(player);
+        if (!BW2023.isTracking(arena, uuid)) return;
+        BW2023.removeTrackingTeam(arena, uuid);
     }
 
     @EventHandler
     public void onLeave(PlayerLeaveArenaEvent e) {
         IArena arena = e.getArena();
         UUID uuid = e.getPlayer().getUniqueId();
-        if (Compass.isTracking(arena, uuid)) Compass.removeTrackingTeam(arena, uuid);
+        if (BW2023.isTracking(arena, uuid)) BW2023.removeTrackingTeam(arena, uuid);
     }
 
     @EventHandler
     public void onKill(PlayerDeathEvent e) {
         Player player = e.getEntity();
-        if (!Compass.getBedWars().getArenaUtil().isPlaying(player)) return;
-        NBTItem nbti = new NBTItem(Compass.getMainConfig().getItem(player, MainConfig.COMPASS_ITEM, true, "compass-item"));
+        if (!bedWars.getArenaUtil().isPlaying(player)) return;
+        NBTItem nbti = new NBTItem(bedWars, BW2023.getMainConfig().getItem(player, MainConfig.COMPASS_ITEM, true, "compass-item"));
         e.getDrops().remove(nbti.getItem());
     }
 
@@ -53,8 +59,8 @@ public class GameListener implements Listener {
         Player victim = e.getVictim();
         UUID victimUniqueId = victim.getUniqueId();
         ITeam victimTeam = arena.getTeam(victim);
-        if (Compass.isTracking(arena, victimUniqueId)) Compass.removeTrackingTeam(arena, victimUniqueId);
-        if (victimTeam.getMembers().size() == 0) Compass.getTrackingArenaMap().values().removeIf(victimTeam::equals);
+        if (BW2023.isTracking(arena, victimUniqueId)) BW2023.removeTrackingTeam(arena, victimUniqueId);
+        if (victimTeam.getMembers().size() == 0) BW2023.getTrackingArenaMap().values().removeIf(victimTeam::equals);
     }
 
     @EventHandler
@@ -69,7 +75,7 @@ public class GameListener implements Listener {
             arena.getPlayers().forEach(this::addToInventory);
         }
         else if (e.getNewState().equals(GameState.restarting)) {
-            Compass.removeTrackingArena(arena);
+            BW2023.removeTrackingArena(arena);
         }
     }
 
@@ -77,13 +83,13 @@ public class GameListener implements Listener {
     public void onCompassDrop(ItemSpawnEvent e) {
         ItemStack is = e.getEntity().getItemStack();
         if (is == null) return;
-        String data = new NBTItem(is).getString("data");
+        String data = new NBTItem(bedWars, is).getString("data");
         if (data == null) return;
         if (data.equals("compass-item")) e.setCancelled(true);
     }
 
     public void addToInventory(Player p) {
-        NBTItem nbti = new NBTItem(Compass.getMainConfig().getItem(p, MainConfig.COMPASS_ITEM, true, "compass-item"));
+        NBTItem nbti = new NBTItem(bedWars, BW2023.getMainConfig().getItem(p, MainConfig.COMPASS_ITEM, true, "compass-item"));
         p.getInventory().setItem(nbti.getInteger("slot"), nbti.getItem());
     }
 

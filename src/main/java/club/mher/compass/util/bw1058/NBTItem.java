@@ -1,16 +1,17 @@
-package club.mher.compass.util;
+package club.mher.compass.util.bw1058;
 
-import club.mher.compass.Compass;
+import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.server.VersionSupport;
 import org.bukkit.inventory.ItemStack;
 
 public class NBTItem {
-
-    private static final VersionSupport nms = Compass.getBedWars().getVersionSupport();
+    private static BedWars bedWars = null;
+    private static final VersionSupport nms = bedWars.getVersionSupport();
 
     private ItemStack is;
 
-    public NBTItem(ItemStack is) {
+    public NBTItem(BedWars bedWars, ItemStack is) {
+        this.bedWars = bedWars;
         this.is = is;
     }
 

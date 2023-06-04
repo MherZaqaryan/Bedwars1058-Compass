@@ -23,6 +23,10 @@
             <url>https://repo.andrei1058.dev/releases/</url>
         </repository>
         <repository>
+            <id>bedwars2023-repo</id>
+            <url>https://repo.andrei1058.dev/releases/</url>
+        </repository>
+        <repository>
             <id>codemc-repo</id>
             <url>https://repo.codemc.org/repository/maven-public/</url>
             <layout>default</layout>
@@ -48,6 +52,12 @@
             <groupId>com.andrei1058.bedwars</groupId>
             <artifactId>BedWars1058</artifactId>
             <version>23.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tomkeuper.bedwars</groupId>
+            <artifactId>bedwars-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

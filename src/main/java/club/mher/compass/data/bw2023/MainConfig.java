@@ -1,9 +1,10 @@
-package club.mher.compass.data;
+package club.mher.compass.data.bw2023;
 
 import club.mher.compass.Compass;
 import club.mher.compass.menu.MenuType;
-import com.andrei1058.bedwars.api.configuration.ConfigManager;
-import club.mher.compass.util.ItemBuilder;
+import club.mher.compass.util.bw2023.ItemBuilder;
+import com.tomkeuper.bedwars.api.BedWars;
+import com.tomkeuper.bedwars.api.configuration.ConfigManager;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -13,14 +14,16 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 
 public class MainConfig extends ConfigManager {
+    private final BedWars bedWars;
 
-    public MainConfig(Plugin plugin, String name, String dir) {
+    public MainConfig(Plugin plugin, String name, String dir, BedWars bedWars) {
         super(plugin, name, dir);
+        this.bedWars = bedWars;
         YamlConfiguration yml = getYml();
         yml.options().header("BedWars1058 Compass Addon By Mher Zaqaryan, Version: " + Compass.getInstance().getDescription().getVersion());
         yml.addDefault(USE_COMMUNICATIONS, true);
         yml.addDefault(TRACKER_UPDATE_RATE, 1);
-        yml.addDefault(MESSAGE_SEND_SOUND, Compass.getBedWars().getForCurrentVersion("SUCCESSFUL_HIT", "ENTITY_ARROW_HIT_PLAYER", "ENTITY_ARROW_HIT_PLAYER") + ",1,1");
+        yml.addDefault(MESSAGE_SEND_SOUND, bedWars.getForCurrentVersion("SUCCESSFUL_HIT", "ENTITY_ARROW_HIT_PLAYER", "ENTITY_ARROW_HIT_PLAYER") + ",1,1");
         yml.addDefault(PLAYER_TRACK_COST, 2);
         yml.addDefault(PLAYER_TRACK_RESOURCE, "EMERALD");
         yml.addDefault(MAIN_MENU_SIZE, 27);
@@ -31,7 +34,7 @@ public class MainConfig extends ConfigManager {
         saveItem(MAIN_MENU_COMMUNICATIONS, "EMERALD", 11);
         yml.addDefault(TRACKER_MENU_SIZE, 36);
         yml.addDefault(TRACKER_MENU_SLOTS, "10,11,12,13,14,15,16,19,20,21,22,23,24,25");
-        saveItem(TRACKER_MENU_TEAM_ITEM, Compass.getBedWars().getForCurrentVersion("WOOL", "WOOL", "WHITE_WOOL"));
+        saveItem(TRACKER_MENU_TEAM_ITEM, bedWars.getForCurrentVersion("WOOL", "WOOL", "WHITE_WOOL"));
         saveItem(TRACKER_MENU_BACK_ITEM, "ARROW", 31);
         yml.addDefault(COMMUNICATIONS_MENU_SIZE, 45);
         saveItem(COMMUNICATIONS_MENU_BACK, "ARROW", 40);
@@ -39,13 +42,13 @@ public class MainConfig extends ConfigManager {
         if (isFirstTime()) {
             saveCommunicationItem("1", "BOOK", 10, MenuType.NONE);
             saveCommunicationItem("2", "BOOK", 11, MenuType.NONE);
-            saveCommunicationItem("3", Compass.getBedWars().getForCurrentVersion("IRON_FENCE", "IRON_FENCE", "IRON_BARS"), 12, MenuType.NONE);
+            saveCommunicationItem("3", bedWars.getForCurrentVersion("IRON_FENCE", "IRON_FENCE", "IRON_BARS"), 12, MenuType.NONE);
             saveCommunicationItem("4", "IRON_SWORD", 13, MenuType.TEAM);
             saveCommunicationItem("5", "DIAMOND", 14, MenuType.RESOURCE);
             saveCommunicationItem("6", "CHEST", 15, MenuType.RESOURCE);
             saveCommunicationItem("7", "BOOK", 20, MenuType.NONE);
             saveCommunicationItem("8", "BOOK", 21, MenuType.NONE);
-            saveCommunicationItem("9", Compass.getBedWars().getForCurrentVersion("IRON_FENCE", "IRON_FENCE", "IRON_BARS"), 22, MenuType.NONE);
+            saveCommunicationItem("9", bedWars.getForCurrentVersion("IRON_FENCE", "IRON_FENCE", "IRON_BARS"), 22, MenuType.NONE);
             saveCommunicationItem("10", "IRON_SWORD", 23, MenuType.TEAM);
             saveCommunicationItem("11", "DIAMOND", 24, MenuType.RESOURCE);
             saveCommunicationItem("12", "FEATHER", 25, MenuType.NONE);
@@ -92,7 +95,7 @@ public class MainConfig extends ConfigManager {
         name = COMMUNICATIONS_MENU_RESOURCES + "." + name;
         YamlConfiguration msg = MessagesData.getYml(player);
         String displayName = msg.getString(path).replace("{resource}", msg.getString(MessagesData.PATH + name + ".resource-name"));
-        return new ItemBuilder(getString(name + ".material"))
+        return new ItemBuilder(bedWars, getString(name + ".material"))
             .setDisplayName(displayName)
             .setLore(msg.getStringList(MessagesData.COMMUNICATIONS_MENU_LORE).stream().map(s -> s.replace("{message}", displayName)).collect(Collectors.toList()))
             .setEnchanted(getBoolean(name + ".enchanted"))
@@ -103,7 +106,7 @@ public class MainConfig extends ConfigManager {
     }
 
     public ItemStack getCommunicationItem(Player player, String path) {
-        return new ItemBuilder(getItem(player, path, true, "communication-item"))
+        return new ItemBuilder(bedWars, getItem(player, path, true, "communication-item"))
             .addTag("path", MessagesData.PATH + path + ".message")
             .addTag("menuType", getString(path + ".menu"))
             .build();
@@ -111,7 +114,7 @@ public class MainConfig extends ConfigManager {
 
     public ItemStack getItem(Player player, String path, boolean hasSlot, String customData) {
         YamlConfiguration msg = MessagesData.getYml(player);
-        ItemBuilder ib = new ItemBuilder(getString(path + ".material"))
+        ItemBuilder ib = new ItemBuilder(bedWars, getString(path + ".material"))
             .setEnchanted(getBoolean(path + ".enchanted"))
             .setDisplayName(msg.getString(MessagesData.PATH +path+ ".display-name"))
             .setLore(msg.getStringList(MessagesData.PATH + path + ".lore"));
