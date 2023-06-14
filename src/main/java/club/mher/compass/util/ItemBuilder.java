@@ -1,13 +1,5 @@
-package club.mher.compass.util.bw1058;
+package club.mher.compass.util;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import club.mher.compass.util.TextUtil;
-import club.mher.compass.util.VersionUtil;
-import com.andrei1058.bedwars.api.BedWars;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -18,12 +10,17 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 public class ItemBuilder {
 
-    private final BedWars bedWars;
+    private final Object bedWars;
     private ItemStack is;
 
-    public ItemBuilder(BedWars bedWars, String material) {
+    public ItemBuilder(Object bedWars, String material) {
         this.bedWars = bedWars;
         String[] args = material.split(":");
         if (args.length == 2) {
@@ -34,16 +31,16 @@ public class ItemBuilder {
         else is = new ItemStack(Material.valueOf(material));
     }
 
-    public ItemBuilder(Material m, BedWars bedWars){
+    public ItemBuilder(Material m, Object bedWars){
         this(bedWars, m, 1);
     }
 
-    public ItemBuilder(BedWars bedWars, ItemStack is){
+    public ItemBuilder(Object bedWars, ItemStack is){
         this.bedWars = bedWars;
         this.is = is;
     }
 
-    public ItemBuilder(BedWars bedWars, Material m, int data){
+    public ItemBuilder(Object bedWars, Material m, int data){
         this.bedWars = bedWars;
         is = new ItemStack(m, 1, (byte) data);
     }

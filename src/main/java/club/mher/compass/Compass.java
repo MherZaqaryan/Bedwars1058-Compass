@@ -1,9 +1,16 @@
 package club.mher.compass;
 
+import club.mher.compass.command.bw1058.CompassMenuCommand;
+import club.mher.compass.data.IMainConfig;
+import club.mher.compass.data.bw1058.MainConfig;
+import club.mher.compass.listener.bw1058.GameListener;
+import club.mher.compass.listener.MenuListener;
+import club.mher.compass.listener.QuickBuyListener;
+import club.mher.compass.support.Misc;
 import club.mher.compass.support.bstats.Metrics;
 import club.mher.compass.support.vault.VaultSupport;
 import lombok.Getter;
-import club.mher.compass.data.bw1058.MessagesData;
+import club.mher.compass.data.MessagesData;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,6 +26,8 @@ public class Compass extends JavaPlugin {
 
     public static final String VERSION = Bukkit.getServer().getClass().getName().split("\\.")[3];
     public static String PLUGIN_VERSION;
+    public static String HOOK_NAME;
+    public static IMainConfig config;
 
     @Override
     public void onEnable() {
@@ -35,21 +44,24 @@ public class Compass extends JavaPlugin {
         vault = new VaultSupport();
         isUsingVaultChat = vault.setupChat();
         if (Bukkit.getPluginManager().isPluginEnabled("BedWars1058")){
+            HOOK_NAME = "BW1058";
             com.andrei1058.bedwars.api.BedWars bedWars;
             bedWars = Bukkit.getServicesManager().getRegistration(com.andrei1058.bedwars.api.BedWars.class).getProvider();
-            new club.mher.compass.command.bw1058.CompassMenuCommand(bedWars,bedWars.getBedWarsCommand(), "compass");
-            club.mher.compass.data.bw1058.MainConfig mainConfig = new club.mher.compass.data.bw1058.MainConfig(this, "config", bedWars.getAddonsPath().getPath()+File.separator+"Compass", bedWars);
-            mainConfig.reload();
-            Arrays.asList(new club.mher.compass.listener.bw1058.MenuListener(bedWars), new club.mher.compass.listener.bw1058.GameListener(bedWars), new club.mher.compass.listener.bw1058.QuickBuyListener(bedWars)).forEach(l -> Bukkit.getPluginManager().registerEvents(l, this));
+            new CompassMenuCommand(bedWars,bedWars.getBedWarsCommand(), "compass");
+            config = new MainConfig(this, "config", bedWars.getAddonsPath().getPath()+File.separator+"Compass", bedWars);
+            config.reload();
+            Misc.setMainConfig(config);
+            Arrays.asList(new MenuListener(bedWars), new GameListener(bedWars), new QuickBuyListener(bedWars)).forEach(l -> Bukkit.getPluginManager().registerEvents(l, this));
         }
         if (Bukkit.getPluginManager().isPluginEnabled("BedWars2023")){
-            //todo switch classes
+            HOOK_NAME = "BW2023";
             com.tomkeuper.bedwars.api.BedWars bedWars;
             bedWars = Bukkit.getServicesManager().getRegistration(com.tomkeuper.bedwars.api.BedWars.class).getProvider();
-            new club.mher.compass.command.bw2023.CompassMenuCommand(bedWars,bedWars.getBedWarsCommand(), "compass", bedWars);
-            club.mher.compass.data.bw2023.MainConfig mainConfig = new club.mher.compass.data.bw2023.MainConfig(this, "config", bedWars.getAddonsPath().getPath()+File.separator+"Compass", bedWars);
-            mainConfig.reload();
-            Arrays.asList(new club.mher.compass.listener.bw2023.MenuListener(bedWars), new club.mher.compass.listener.bw2023.GameListener(bedWars), new club.mher.compass.listener.bw2023.QuickBuyListener(bedWars)).forEach(l -> Bukkit.getPluginManager().registerEvents(l, this));
+            new club.mher.compass.command.bw2023.CompassMenuCommand(bedWars,bedWars.getBedWarsCommand(), "compass");
+            config = new club.mher.compass.data.bw2023.MainConfig(this, "config", bedWars.getAddonsPath().getPath()+File.separator+"Compass", bedWars);
+            config.reload();
+            Misc.setMainConfig(config);
+            Arrays.asList(new MenuListener(bedWars), new club.mher.compass.listener.bw2023.GameListener(bedWars), new QuickBuyListener(bedWars)).forEach(l -> Bukkit.getPluginManager().registerEvents(l, this));
         }
 
         new MessagesData();

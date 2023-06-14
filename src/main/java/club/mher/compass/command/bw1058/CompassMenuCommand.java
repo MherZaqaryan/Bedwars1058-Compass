@@ -1,8 +1,8 @@
 package club.mher.compass.command.bw1058;
 
 import club.mher.compass.Compass;
-import club.mher.compass.menu.menus.bw1058.MainMenu;
-import club.mher.compass.support.BW1058;
+import club.mher.compass.menu.menus.MainMenu;
+import club.mher.compass.support.Misc;
 import com.andrei1058.bedwars.api.BedWars;
 import com.andrei1058.bedwars.api.arena.GameState;
 import com.andrei1058.bedwars.api.arena.IArena;
@@ -17,9 +17,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CompassMenuCommand extends SubCommand {
-    private final BedWars bedWars;
-    public CompassMenuCommand(BedWars bedWars,ParentCommand parent, String name) {
-        super(parent, name);
+    private final Object bedWars;
+    public CompassMenuCommand(Object bedWars,Object parent, String name) {
+        super((ParentCommand) parent, name);
         this.bedWars = bedWars;
         showInList(true);
         setDisplayInfo(TextUtil.msgHoverClick(" &6▪ &7/bw compass &8- &eTo see commands list", "Click to see all list of commands", "/bw compass", ClickEvent.Action.RUN_COMMAND));
@@ -41,15 +41,15 @@ public class CompassMenuCommand extends SubCommand {
                 ).forEach(player.spigot()::sendMessage);
             }else if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("menu")) {
-                    if (!bedWars.getArenaUtil().isPlaying(player)) return true;
-                    IArena arena = bedWars.getArenaUtil().getArenaByPlayer(player);
-                    if (!arena.getStatus().equals(GameState.playing)) return true;
-                    if (arena.isSpectator(player)) return true;
+                        if (!((BedWars) bedWars).getArenaUtil().isPlaying(player)) return true;
+                        IArena arena = ((BedWars) bedWars).getArenaUtil().getArenaByPlayer(player);
+                        if (!arena.getStatus().equals(GameState.playing)) return true;
+                        if (arena.isSpectator(player)) return true;
                     new MainMenu(bedWars, player).open();
                 }
                 else if (args[0].equalsIgnoreCase("reload")) {
                     if (player.hasPermission("bw.compass.reload")) {
-                        BW1058.getMainConfig().reload();
+                        Misc.getMainConfig().reload();
                         player.sendMessage(TextUtil.colorize("&aConfiguration file has been reloaded."));
                     }
                 }

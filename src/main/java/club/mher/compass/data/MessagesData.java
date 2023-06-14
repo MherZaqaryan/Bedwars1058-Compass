@@ -1,10 +1,15 @@
-package club.mher.compass.data.bw2023;
+package club.mher.compass.data;
 
-import com.tomkeuper.bedwars.api.language.Language;
+import club.mher.compass.Compass;
+import club.mher.compass.data.bw1058.MainConfig;
+import com.andrei1058.bedwars.api.language.Language;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class MessagesData {
 
@@ -15,9 +20,26 @@ public class MessagesData {
     }
 
     public void setupMessages() {
-        for (Language l : Language.getLanguages()) {
-            YamlConfiguration yml = l.getYml();
-            switch (l.getIso()) {
+        List<Object> languages = new ArrayList<>();
+        if (Compass.HOOK_NAME.equals("BW1058")){
+            languages.addAll(Language.getLanguages());
+        }
+        else if (Compass.HOOK_NAME.equals("BW2023")) {
+            languages.addAll(com.tomkeuper.bedwars.api.language.Language.getLanguages());
+        }
+
+        for (Object l : languages) {
+            YamlConfiguration yml = null;
+            String iso = "";
+            if (Compass.HOOK_NAME.equals("BW1058")){
+                iso = ((Language)l).getIso();
+                yml = ((Language)l).getYml();
+            }
+            else if (Compass.HOOK_NAME.equals("BW2023")) {
+                iso = ((com.tomkeuper.bedwars.api.language.Language)l).getIso();
+                yml = ((com.tomkeuper.bedwars.api.language.Language)l).getYml();
+            }
+            switch (iso) {
                 // By Sxhqil (Persian)
                 case "fa":
                     yml.addDefault(NOT_ALL_BEDS_DESTROYED, "&cHich Kodoom Az Bed Haye Doshman Kharab Nashode!");
@@ -341,17 +363,30 @@ public class MessagesData {
                     saveResource(yml, MainConfig.COMMUNICATIONS_MENU_RESOURCES + ".emerald", "&2&lEMERALD");
                     break;
             }
-            l.getYml().options().copyDefaults(true);
-            l.save();
+            if (Compass.HOOK_NAME.equals("BW1058")){
+                ((Language)l).getYml().options().copyDefaults(true);
+                ((Language)l).save();
+            }
+            else if (Compass.HOOK_NAME.equals("BW2023")) {
+                ((com.tomkeuper.bedwars.api.language.Language)l).getYml().options().copyDefaults(true);
+                ((com.tomkeuper.bedwars.api.language.Language)l).save();
+            }
         }
     }
 
-    public static Language getLang(Player player) {
-        return Language.getPlayerLanguage(player);
+    public static Object getLang(Player player) {
+        if (Compass.HOOK_NAME.equals("BW1058")) return Language.getPlayerLanguage(player);
+        else if (Compass.HOOK_NAME.equals("BW2023")) return com.tomkeuper.bedwars.api.language.Language.getPlayerLanguage(player);
+        return null;
     }
 
     public static YamlConfiguration getYml(Player player) {
-        return getLang(player).getYml();
+        if (Compass.HOOK_NAME.equals("BW1058")){
+            return ((Language)getLang(player)).getYml();
+        } else if (Compass.HOOK_NAME.equals("BW2023")){
+            return ((com.tomkeuper.bedwars.api.language.Language)getLang(player)).getYml();
+        }
+        return null;
     }
 
     private void saveResource(YamlConfiguration yml, String path, String resourceName) {

@@ -24,7 +24,7 @@
         </repository>
         <repository>
             <id>bedwars2023-repo</id>
-            <url>https://repo.andrei1058.dev/releases/</url>
+            <url>https://repo.tomkeuper.com/bedwars-snapshots/</url>
         </repository>
         <repository>
             <id>codemc-repo</id>

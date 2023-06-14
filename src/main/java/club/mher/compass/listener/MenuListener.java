@@ -1,25 +1,23 @@
-package club.mher.compass.listener.bw2023;
+package club.mher.compass.listener;
 
+import club.mher.compass.Compass;
 import club.mher.compass.menu.Menu;
-import club.mher.compass.util.bw2023.NBTItem;
-import com.tomkeuper.bedwars.api.BedWars;
+import club.mher.compass.util.NBTItem;
+import com.andrei1058.bedwars.api.BedWars;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 public class MenuListener implements Listener {
-    private final BedWars bedWars;
+    private final Object bedWars;
 
-    public MenuListener(BedWars bedWars) {
+    public MenuListener(Object bedWars) {
         this.bedWars = bedWars;
     }
 
@@ -50,8 +48,13 @@ public class MenuListener implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
+        ItemStack item = null;
         Player player = e.getPlayer();
-        ItemStack item = bedWars.getVersionSupport().getItemInHand(player);
+        if (Compass.HOOK_NAME.equals("BW1058")){
+            item = ((BedWars) bedWars).getVersionSupport().getItemInHand(player);
+        } else if (Compass.HOOK_NAME.equals("BW2023")){
+            item = ((com.tomkeuper.bedwars.api.BedWars) bedWars).getVersionSupport().getItemInHand(player);
+        }
         if (item == null) return;
         if (item.getType() == Material.AIR) return;
         String data = new NBTItem(bedWars, item).getString("data");

@@ -1,48 +1,50 @@
 package club.mher.compass.support;
 
+import club.mher.compass.data.IMainConfig;
 import club.mher.compass.data.bw1058.MainConfig;
-import com.andrei1058.bedwars.api.arena.IArena;
-import com.andrei1058.bedwars.api.arena.team.ITeam;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.UUID;
 
-public class BW1058 {
-    @Getter private static MainConfig mainConfig;
+public class Misc {
     @Getter
-    private static final HashMap<IArena, HashMap<UUID, ITeam>> trackingArenaMap = new HashMap<>();
+    @Setter
+    private static IMainConfig mainConfig;
+    @Getter
+    private static final HashMap<Object, HashMap<UUID, Object>> trackingArenaMap = new HashMap<>();
 
-    public static void setTrackingTeam(IArena arena, UUID uuid, ITeam team) {
+    public static void setTrackingTeam(Object arena, UUID uuid, Object team) {
         if (trackingArenaMap.get(arena) != null) {
             getTrackingTeamMap(arena).put(uuid, team);
             return;
         }
-        HashMap<UUID, ITeam> map = new HashMap<>();
+        HashMap<UUID, Object> map = new HashMap<>();
         map.put(uuid, team);
         trackingArenaMap.put(arena, map);
     }
 
-    public static boolean isTracking(IArena arena, UUID uuid) {
+    public static boolean isTracking(Object arena, UUID uuid) {
         if (trackingArenaMap.containsKey(arena)) {
             return trackingArenaMap.get(arena).containsKey(uuid);
         }
         return false;
     }
 
-    public static HashMap<UUID, ITeam> getTrackingTeamMap(IArena arena) {
+    public static HashMap<UUID, Object> getTrackingTeamMap(Object arena) {
         return trackingArenaMap.get(arena);
     }
 
-    public static ITeam getTrackingTeam(IArena arena, UUID uuid) {
+    public static Object getTrackingTeam(Object arena, UUID uuid) {
         return trackingArenaMap.get(arena).get(uuid);
     }
 
-    public static void removeTrackingTeam(IArena arena, UUID uuid) {
+    public static void removeTrackingTeam(Object arena, UUID uuid) {
         trackingArenaMap.get(arena).remove(uuid);
     }
 
-    public static void removeTrackingArena(IArena arena) {
+    public static void removeTrackingArena(Object arena) {
         trackingArenaMap.remove(arena);
     }
 
