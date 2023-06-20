@@ -3,6 +3,8 @@ package club.mher.compass.menu.menus;
 import club.mher.compass.Compass;
 import club.mher.compass.data.bw1058.MainConfig;
 import club.mher.compass.data.MessagesData;
+import club.mher.compass.menu.menus.communicationMenus.ResourceSelector;
+import club.mher.compass.menu.menus.communicationMenus.TeamSelector;
 import club.mher.compass.support.Misc;
 import club.mher.compass.util.MessagingUtil;
 import club.mher.compass.util.NBTItem;

@@ -1,9 +1,10 @@
-package club.mher.compass.menu.menus;
+package club.mher.compass.menu.menus.communicationMenus;
 
 import club.mher.compass.Compass;
 import club.mher.compass.data.bw1058.MainConfig;
 import club.mher.compass.data.MessagesData;
 import club.mher.compass.menu.Menu;
+import club.mher.compass.menu.menus.CommunicationsMenu;
 import club.mher.compass.support.Misc;
 import club.mher.compass.util.MessagingUtil;
 import club.mher.compass.util.NBTItem;
