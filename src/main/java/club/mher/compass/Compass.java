@@ -10,12 +10,9 @@ import club.mher.compass.support.BW2023;
 import club.mher.compass.support.Misc;
 import club.mher.compass.support.bstats.Metrics;
 import club.mher.compass.support.vault.VaultSupport;
-import com.tomkeuper.bedwars.api.BedWars;
-import com.tomkeuper.bedwars.api.addon.Addon;
 import lombok.Getter;
 import club.mher.compass.data.MessagesData;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -68,11 +65,9 @@ public class Compass extends JavaPlugin {
             Arrays.asList(new MenuListener(bedWars), new club.mher.compass.listener.bw2023.GameListener(bedWars), new QuickBuyListener(bedWars)).forEach(l -> Bukkit.getPluginManager().registerEvents(l, this));
 
             if (BW2023.instance == null) bedWars.getAddonsUtil().registerAddon(new BW2023());
-
         }
 
         new MessagesData();
-//        Arrays.asList(new MenuListener(), new GameListener(), new QuickBuyListener()).forEach(l -> Bukkit.getPluginManager().registerEvents(l, this));
         getLogger().log(Level.INFO, "Successfully loaded in " + (System.currentTimeMillis() - start) + "ms");
     }
 
@@ -81,5 +76,4 @@ public class Compass extends JavaPlugin {
         Bukkit.getScheduler().cancelTasks(this);
 //        trackingArenaMap.clear();
     }
-
 }

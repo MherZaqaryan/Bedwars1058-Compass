@@ -1,7 +1,6 @@
 package club.mher.compass.support;
 
 import club.mher.compass.data.IMainConfig;
-import club.mher.compass.data.bw1058.MainConfig;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,6 +1,5 @@
 package club.mher.compass.listener.bw2023;
 
-import club.mher.compass.Compass;
 import club.mher.compass.data.bw1058.MainConfig;
 import club.mher.compass.support.Misc;
 import club.mher.compass.util.NBTItem;

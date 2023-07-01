@@ -1,6 +1,5 @@
 package club.mher.compass.data;
 
-import club.mher.compass.menu.MenuType;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
