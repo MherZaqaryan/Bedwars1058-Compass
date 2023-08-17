@@ -1,17 +1,13 @@
 package club.mher.compass.menu.menus;
 
 import club.mher.compass.Compass;
-import club.mher.compass.data.MainConfig;
+import club.mher.compass.data.BW1058MainConfig;
 import club.mher.compass.data.MessagesData;
-import com.andrei1058.bedwars.api.arena.IArena;
-import com.andrei1058.bedwars.api.arena.team.ITeam;
 
 import club.mher.compass.menu.Menu;
 import club.mher.compass.tasks.ActionBarTask;
 import club.mher.compass.util.NBTItem;
 import club.mher.compass.util.TextUtil;
-import com.andrei1058.bedwars.shop.ShopManager;
-import com.andrei1058.bedwars.shop.quickbuy.PlayerQuickBuyCache;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -24,17 +20,17 @@ import java.util.*;
 public class TrackerMenu extends Menu {
 
     private final YamlConfiguration yml;
-    private final IArena arena;
+    private final Object arena;
     private final List<Integer> slots = new ArrayList<>();
-    private final HashMap<Integer, ITeam> teamSlotMap;
+    private final HashMap<Integer, Object> teamSlotMap;
     private boolean backToShop = false;
 
-    public TrackerMenu(Player player, IArena arena) {
+    public TrackerMenu(Player player, Object arena) {
         super(player);
         this.arena = arena;
         this.teamSlotMap = new HashMap<>();
         this.yml = MessagesData.getYml(player);
-        for (String s : Compass.getMainConfig().getYml().getString(MainConfig.TRACKER_MENU_SLOTS).split(",")) {
+        for (String s : Compass.getMainConfig().getYml().getString(BW1058MainConfig.TRACKER_MENU_SLOTS).split(",")) {
             int i;
             try {
                 i = Integer.parseInt(s);
@@ -52,7 +48,7 @@ public class TrackerMenu extends Menu {
 
     @Override
     public int getSlots() {
-        return Compass.getMainConfig().getInt(MainConfig.TRACKER_MENU_SIZE);
+        return Compass.getMainConfig().getInt(BW1058MainConfig.TRACKER_MENU_SIZE);
     }
 
     @Override
@@ -63,7 +59,7 @@ public class TrackerMenu extends Menu {
 
         if (nbtItem.getString("data").equals("main-menu")) {
             if (backToShop) {
-                ShopManager.shop.open(player, PlayerQuickBuyCache.getQuickBuyCache(player.getUniqueId()), false);
+                Compass.getBedWars().openShop(player);
             }else {
                 new MainMenu(player).open();
             }
@@ -71,13 +67,13 @@ public class TrackerMenu extends Menu {
 
         if (!slots.contains(e.getSlot())) return;
 
-        if (!isAllBedsDestroyed(arena.getTeam(player))) {
+        if (!Compass.getBedWars().isAllBedsDestroyedForTeam(arena, player)) {
             player.closeInventory();
             player.sendMessage(TextUtil.colorize(yml.getString(MessagesData.NOT_ALL_BEDS_DESTROYED)));
             return;
         }
 
-        if (!player.getInventory().contains(Material.valueOf(Compass.getMainConfig().getString(MainConfig.PLAYER_TRACK_RESOURCE)), Compass.getMainConfig().getInt(MainConfig.PLAYER_TRACK_COST))) {
+        if (!player.getInventory().contains(Material.valueOf(Compass.getMainConfig().getString(BW1058MainConfig.PLAYER_TRACK_RESOURCE)), Compass.getMainConfig().getInt(BW1058MainConfig.PLAYER_TRACK_COST))) {
             player.closeInventory();
             player.sendMessage(TextUtil.colorize(yml.getString(MessagesData.NOT_ENOUGH_RESOURCE)));
             return;
@@ -92,24 +88,24 @@ public class TrackerMenu extends Menu {
             }
         }
 
-        if (!Compass.getTrackingArenaMap().containsKey(arena)) {
-            new ActionBarTask(arena).runTaskTimer(Compass.getInstance(), 0, Compass.getMainConfig().getInt(MainConfig.TRACKER_UPDATE_RATE));
+        if (!Compass.getBedWars().containsKeyTrackingArenaMap(arena)) {
+            new ActionBarTask(arena).runTaskTimer(Compass.getInstance(), 0, Compass.getMainConfig().getInt(BW1058MainConfig.TRACKER_UPDATE_RATE));
         }
 
         Compass.setTrackingTeam(arena, uuid, teamSlotMap.get(e.getSlot()));
-        Compass.getBedWars().getShopUtil().takeMoney(player, Material.valueOf(Compass.getMainConfig().getString(MainConfig.PLAYER_TRACK_RESOURCE)), Compass.getMainConfig().getInt(MainConfig.PLAYER_TRACK_COST));
+        Compass.getBedWars().takeMoney(player, Material.valueOf(Compass.getMainConfig().getString(BW1058MainConfig.PLAYER_TRACK_RESOURCE)), Compass.getMainConfig().getInt(BW1058MainConfig.PLAYER_TRACK_COST));
         player.sendMessage(TextUtil.colorize(yml.getString(MessagesData.PURCHASED)));
     }
 
     @Override
     public void setMenuItems() {
-        NBTItem nbtItem = new NBTItem(Compass.getMainConfig().getItem(player, MainConfig.TRACKER_MENU_BACK_ITEM, true, "main-menu"));
+        NBTItem nbtItem = new NBTItem(Compass.getMainConfig().getItem(player, BW1058MainConfig.TRACKER_MENU_BACK_ITEM, true, "main-menu"));
         int index = 0;
-        for (ITeam team : arena.getTeams()) {
-            if (team.getMembers().isEmpty()) continue;
-            if (arena.getTeam(player).equals(team)) continue;
+        for (Object team : Compass.getBedWars().getTeamsByArena(arena)) {
+            if (Compass.getBedWars().getPlayersForTeam(team).isEmpty()) continue;
+            if (Compass.getBedWars().getTeamByArena(arena, player).equals(team)) continue;
             if (slots.size() <= index) continue;
-            NBTItem teamItem = new NBTItem(Compass.getMainConfig().getItem(player, MainConfig.TRACKER_MENU_TEAM_ITEM, false, null));
+            NBTItem teamItem = new NBTItem(Compass.getMainConfig().getItem(player, BW1058MainConfig.TRACKER_MENU_TEAM_ITEM, false, null));
             teamSlotMap.put(slots.get(index), team);
             inventory.setItem(slots.get(index), getTeamItem(teamItem.getItem(), team, player));
             index++;
@@ -117,10 +113,10 @@ public class TrackerMenu extends Menu {
         inventory.setItem(nbtItem.getInteger("slot"), nbtItem.getItem());
     }
 
-    public ItemStack getTeamItem(ItemStack itemStack, ITeam team, Player player) {
+    public ItemStack getTeamItem(ItemStack itemStack, Object team, Player player) {
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemStack = Compass.getBedWars().getVersionSupport().colourItem(itemStack, team);
-        itemMeta.setDisplayName(TextUtil.colorize(itemMeta.getDisplayName().replace("{team}", team.getDisplayName(Compass.getBedWars().getPlayerLanguage(player)))));
+        itemStack = Compass.getBedWars().colourItem(itemStack, team);
+        itemMeta.setDisplayName(TextUtil.colorize(itemMeta.getDisplayName().replace("{team}", Compass.getBedWars().getTeamDisplayName(team, player))));
         if (itemMeta.hasLore()) {
             List<String> newLore = new ArrayList<>();
             itemMeta.getLore().forEach(s -> newLore.add(TextUtil.colorize(s.replace("{status}", getStatus(player, arena)))));
@@ -130,25 +126,14 @@ public class TrackerMenu extends Menu {
         return itemStack;
     }
 
-    public String getStatus(Player player, IArena arena) {
-        if (!isAllBedsDestroyed(arena.getTeam(player))) {
+    public String getStatus(Player player, Object arena) {
+        if (!Compass.getBedWars().isAllBedsDestroyedForTeam(arena, player)) {
             return yml.getString(MessagesData.STATUS_LOCKED);
-        }else if (!player.getInventory().contains(Material.valueOf(Compass.getMainConfig().getString(MainConfig.PLAYER_TRACK_RESOURCE)), Compass.getMainConfig().getInt(MainConfig.PLAYER_TRACK_COST))) {
+        }else if (!player.getInventory().contains(Material.valueOf(Compass.getMainConfig().getString(BW1058MainConfig.PLAYER_TRACK_RESOURCE)), Compass.getMainConfig().getInt(BW1058MainConfig.PLAYER_TRACK_COST))) {
             return yml.getString(MessagesData.STATUS_NOT_ENOUGH);
         }else {
             return yml.getString(MessagesData.STATUS_UNLOCKED);
         }
-    }
-
-    public boolean isAllBedsDestroyed(ITeam t) {
-        boolean bool = true;
-        for (ITeam team : arena.getTeams()) {
-            if (team.equals(t)) continue;
-            if (team.isBedDestroyed()) continue;
-            bool = false;
-            break;
-        }
-        return bool;
     }
 
     public void setBackToShop(boolean b) {

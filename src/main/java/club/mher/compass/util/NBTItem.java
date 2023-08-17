@@ -1,12 +1,9 @@
 package club.mher.compass.util;
 
 import club.mher.compass.Compass;
-import com.andrei1058.bedwars.api.server.VersionSupport;
 import org.bukkit.inventory.ItemStack;
 
 public class NBTItem {
-
-    private static final VersionSupport nms = Compass.getBedWars().getVersionSupport();
 
     private ItemStack is;
 
@@ -15,20 +12,20 @@ public class NBTItem {
     }
 
     public void setString(String key, String value) {
-        this.is = nms.setTag(is, key, value);
+        this.is = Compass.getBedWars().setNmsTag(is, key, value);
     }
 
     public String getString(String key) {
-        String value = nms.getTag(is, key);
+        String value = Compass.getBedWars().getNmsTag(is, key);
         return value == null ? "" : value;
     }
 
     public void setInteger(String key, Integer value) {
-        this.is = nms.setTag(is, key, String.valueOf(value));
+        this.is = Compass.getBedWars().setNmsTag(is, key, String.valueOf(value));
     }
 
     public Integer getInteger(String key) {
-        return Integer.valueOf(nms.getTag(is, key));
+        return Integer.valueOf(Compass.getBedWars().getNmsTag(is, key));
     }
 
     public ItemStack getItem() {
