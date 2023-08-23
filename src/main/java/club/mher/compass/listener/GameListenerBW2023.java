@@ -1,7 +1,7 @@
 package club.mher.compass.listener;
 
 import club.mher.compass.Compass;
-import club.mher.compass.data.BW1058MainConfig;
+import club.mher.compass.data.BW2023MainConfig;
 import club.mher.compass.util.NBTItem;
 import com.tomkeuper.bedwars.api.arena.GameState;
 import com.tomkeuper.bedwars.api.arena.IArena;
@@ -43,7 +43,7 @@ public class GameListenerBW2023 implements Listener {
     public void onKill(PlayerDeathEvent e) {
         Player player = e.getEntity();
         if (!Compass.getBedWars().isPlaying(player)) return;
-        NBTItem nbti = new NBTItem(Compass.getMainConfig().getItem(player, BW1058MainConfig.COMPASS_ITEM, true, "compass-item"));
+        NBTItem nbti = new NBTItem(Compass.getMainConfig().getItem(player, BW2023MainConfig.COMPASS_ITEM, true, "compass-item"));
         e.getDrops().remove(nbti.getItem());
     }
 
@@ -83,7 +83,7 @@ public class GameListenerBW2023 implements Listener {
     }
 
     public void addToInventory(Player p) {
-        NBTItem nbti = new NBTItem(Compass.getMainConfig().getItem(p, BW1058MainConfig.COMPASS_ITEM, true, "compass-item"));
+        NBTItem nbti = new NBTItem(Compass.getMainConfig().getItem(p, BW2023MainConfig.COMPASS_ITEM, true, "compass-item"));
         p.getInventory().setItem(nbti.getInteger("slot"), nbti.getItem());
     }
 
