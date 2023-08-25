@@ -1,7 +1,7 @@
 package club.mher.compass.listener;
 
 import club.mher.compass.Compass;
-import club.mher.compass.data.MainConfig;
+import club.mher.compass.data.BW1058MainConfig;
 import club.mher.compass.util.NBTItem;
 import com.andrei1058.bedwars.api.arena.GameState;
 import com.andrei1058.bedwars.api.arena.IArena;
@@ -20,14 +20,14 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
-public class GameListener implements Listener {
+public class GameListenerBW1058 implements Listener {
 
     @EventHandler
     public void onServerQuit(PlayerQuitEvent e) {
         Player player = e.getPlayer();
         UUID uuid = player.getUniqueId();
-        if (!Compass.getBedWars().getArenaUtil().isPlaying(player)) return;
-        IArena arena = Compass.getBedWars().getArenaUtil().getArenaByPlayer(player);
+        if (!Compass.getBedWars().isPlaying(player)) return;
+        Object arena = Compass.getBedWars().getArenaByPlayer(player);
         if (!Compass.isTracking(arena, uuid)) return;
         Compass.removeTrackingTeam(arena, uuid);
     }
@@ -42,8 +42,8 @@ public class GameListener implements Listener {
     @EventHandler
     public void onKill(PlayerDeathEvent e) {
         Player player = e.getEntity();
-        if (!Compass.getBedWars().getArenaUtil().isPlaying(player)) return;
-        NBTItem nbti = new NBTItem(Compass.getMainConfig().getItem(player, MainConfig.COMPASS_ITEM, true, "compass-item"));
+        if (!Compass.getBedWars().isPlaying(player)) return;
+        NBTItem nbti = new NBTItem(Compass.getMainConfig().getItem(player, BW1058MainConfig.COMPASS_ITEM, true, "compass-item"));
         e.getDrops().remove(nbti.getItem());
     }
 
@@ -54,7 +54,7 @@ public class GameListener implements Listener {
         UUID victimUniqueId = victim.getUniqueId();
         ITeam victimTeam = arena.getTeam(victim);
         if (Compass.isTracking(arena, victimUniqueId)) Compass.removeTrackingTeam(arena, victimUniqueId);
-        if (victimTeam.getMembers().size() == 0) Compass.getTrackingArenaMap().values().removeIf(victimTeam::equals);
+        if (victimTeam.getMembers().size() == 0) Compass.removeTrackingArenaMapIfEquals(victimTeam);
     }
 
     @EventHandler
@@ -83,7 +83,7 @@ public class GameListener implements Listener {
     }
 
     public void addToInventory(Player p) {
-        NBTItem nbti = new NBTItem(Compass.getMainConfig().getItem(p, MainConfig.COMPASS_ITEM, true, "compass-item"));
+        NBTItem nbti = new NBTItem(Compass.getMainConfig().getItem(p, BW1058MainConfig.COMPASS_ITEM, true, "compass-item"));
         p.getInventory().setItem(nbti.getInteger("slot"), nbti.getItem());
     }
 

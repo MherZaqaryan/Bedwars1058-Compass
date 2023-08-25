@@ -1,50 +1,47 @@
 package club.mher.compass.util;
 
 import club.mher.compass.Compass;
-import club.mher.compass.data.MainConfig;
+import club.mher.compass.data.BW1058MainConfig;
 import club.mher.compass.data.MessagesData;
-import com.andrei1058.bedwars.api.arena.team.ITeam;
-import com.andrei1058.bedwars.api.language.Language;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 public class MessagingUtil {
 
-    public static void simpleMessage(Player player, ITeam team, String path) {
+    public static void simpleMessage(Player player, Object team, String path) {
         player.closeInventory();
-        team.getMembers().forEach(p -> {
+        Compass.getBedWars().getPlayersForTeam(team).forEach(p -> {
             YamlConfiguration yml = MessagesData.getYml(p);
             String formatted = yml.getString(MessagesData.TEAM_MESSAGE_FORMAT).replace("{player}", player.getDisplayName()).replace("{message}", yml.getString(path));
             if (Compass.isUsingVaultChat()) formatted = Compass.getVault().setPlaceholders(formatted, player);
             if (Compass.isUsingPapi()) formatted = PlaceholderAPI.setPlaceholders(player, formatted);
             p.sendMessage(TextUtil.colorize(formatted));
-            VersionUtil.playSound(p, Compass.getMainConfig().getString(MainConfig.MESSAGE_SEND_SOUND));
+            VersionUtil.playSound(p, Compass.getMainConfig().getString(BW1058MainConfig.MESSAGE_SEND_SOUND));
         });
     }
 
-    public static void resourceMessage(Player player, ITeam team, String path, String resourcePath) {
+    public static void resourceMessage(Player player, Object team, String path, String resourcePath) {
         player.closeInventory();
-        team.getMembers().forEach(p -> {
+        Compass.getBedWars().getPlayersForTeam(team).forEach(p -> {
             YamlConfiguration yml = MessagesData.getYml(p);
-            String formatted = yml.getString(MessagesData.TEAM_MESSAGE_FORMAT).replace("{player}", player.getDisplayName()).replace("{message}", yml.getString(path).replace("{resource}", yml.getString(MessagesData.PATH + MainConfig.COMMUNICATIONS_MENU_RESOURCES + "." + resourcePath + ".resource-name")));
+            String formatted = yml.getString(MessagesData.TEAM_MESSAGE_FORMAT).replace("{player}", player.getDisplayName()).replace("{message}", yml.getString(path).replace("{resource}", yml.getString(MessagesData.PATH + BW1058MainConfig.COMMUNICATIONS_MENU_RESOURCES + "." + resourcePath + ".resource-name")));
             if (Compass.isUsingVaultChat()) formatted = Compass.getVault().setPlaceholders(formatted, player);
             if (Compass.isUsingPapi()) formatted = PlaceholderAPI.setPlaceholders(player, formatted);
             p.sendMessage(TextUtil.colorize(formatted));
-            VersionUtil.playSound(p, Compass.getMainConfig().getString(MainConfig.MESSAGE_SEND_SOUND));
+            VersionUtil.playSound(p, Compass.getMainConfig().getString(BW1058MainConfig.MESSAGE_SEND_SOUND));
         });
     }
 
-    public static void teamMessage(Player player, ITeam team, String path, ITeam specifiedTeam) {
+    public static void teamMessage(Player player, Object team, String path, Object specifiedTeam) {
         player.closeInventory();
-        team.getMembers().forEach(p -> {
-            Language lang = MessagesData.getLang(p);
-            YamlConfiguration yml = lang.getYml();
-            String formatted = yml.getString(MessagesData.TEAM_MESSAGE_FORMAT).replace("{player}", player.getDisplayName()).replace("{message}", yml.getString(path).replace("{team}", specifiedTeam.getColor().chat() + "§l" + specifiedTeam.getDisplayName(lang)));
+        Compass.getBedWars().getPlayersForTeam(team).forEach(p -> {
+            YamlConfiguration yml = MessagesData.getYml(p);
+            String formatted = yml.getString(MessagesData.TEAM_MESSAGE_FORMAT).replace("{player}", player.getDisplayName()).replace("{message}", yml.getString(path).replace("{team}", Compass.getBedWars().getColorForTeam(specifiedTeam) + "§l" + Compass.getBedWars().getTeamDisplayName(specifiedTeam, p)));
             if (Compass.isUsingVaultChat()) formatted = Compass.getVault().setPlaceholders(formatted, player);
             if (Compass.isUsingPapi()) formatted = PlaceholderAPI.setPlaceholders(player, formatted);
             p.sendMessage(TextUtil.colorize(formatted));
-            VersionUtil.playSound(p, Compass.getMainConfig().getString(MainConfig.MESSAGE_SEND_SOUND));
+            VersionUtil.playSound(p, Compass.getMainConfig().getString(BW1058MainConfig.MESSAGE_SEND_SOUND));
         });
     }
 

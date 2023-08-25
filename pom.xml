@@ -35,6 +35,10 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <id>bedwars2023-repo</id>
+            <url>https://repo.tomkeuper.com/repository/snapshots/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -47,7 +51,13 @@
         <dependency>
             <groupId>com.andrei1058.bedwars</groupId>
             <artifactId>bedwars-plugin</artifactId>
-            <version>22.7</version>
+            <version>23.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tomkeuper.bedwars</groupId>
+            <artifactId>bedwars-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

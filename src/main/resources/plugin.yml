@@ -7,5 +7,6 @@ description: BedWars1058 Compass Addon By Mher Zaqaryan
 
 softdepend:
   - BedWars1058
+  - BedWars2023
   - PlaceholderAPI
   - Vault

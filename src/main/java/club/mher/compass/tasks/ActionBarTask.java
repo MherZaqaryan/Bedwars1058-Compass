@@ -2,8 +2,6 @@ package club.mher.compass.tasks;
 
 import club.mher.compass.Compass;
 import club.mher.compass.data.MessagesData;
-import com.andrei1058.bedwars.api.arena.IArena;
-import com.andrei1058.bedwars.api.arena.team.ITeam;
 import club.mher.compass.util.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -13,19 +11,19 @@ import java.util.*;
 
 public class ActionBarTask extends BukkitRunnable {
 
-    private final IArena arena;
+    private final Object arena;
 
-    public ActionBarTask(IArena arena) {
+    public ActionBarTask(Object arena) {
         this.arena = arena;
     }
 
     @Override
     public void run() {
-        if (arena.getPlayers().size() <= 1 || !Compass.getTrackingArenaMap().containsKey(arena) || Compass.getTrackingTeamMap(arena) == null) {
+        if (Compass.getBedWars().getPlayers(arena).size() <= 1 || !Compass.getBedWars().containsKeyTrackingArenaMap(arena) || Compass.getTrackingTeamMap(arena) == null) {
             this.cancel();
             return;
         }
-        for (Map.Entry<UUID, ITeam> teamMap : Compass.getTrackingTeamMap(arena).entrySet()) {
+        for (Map.Entry<UUID, Object> teamMap : Compass.getTrackingTeamMap(arena).entrySet()) {
             if (teamMap.getValue() == null) {
                 continue;
             }
@@ -37,23 +35,23 @@ public class ActionBarTask extends BukkitRunnable {
                 continue;
             }
             player.setCompassTarget(getPlayer(player, teamMap.getValue()).getLocation());
-            Compass.getBedWars().getVersionSupport().playAction(player, TextUtil.colorize(MessagesData.getYml(player).getString(MessagesData.ACTION_BAR_TRACKING).replace("{target}", getPlayer(player, teamMap.getValue()).getDisplayName()).replace("{distance}", String.valueOf(getMeters(player, teamMap.getValue())))).replace("{teamColor}", "§"+teamMap.getValue().getColor().chat().getChar()));
+            Compass.getBedWars().playAction(player, TextUtil.colorize(MessagesData.getYml(player).getString(MessagesData.ACTION_BAR_TRACKING).replace("{target}", getPlayer(player, teamMap.getValue()).getDisplayName()).replace("{distance}", String.valueOf(getMeters(player, teamMap.getValue())))).replace("{teamColor}", "§"+ Compass.getBedWars().getColorForTeam(teamMap.getValue()).getChar()));
         }
     }
 
-    public int getMeters(Player player, ITeam team) {
+    public int getMeters(Player player, Object team) {
         List<Map.Entry<Player, Integer>> sorted = getSorted(player, team);
         return sorted.isEmpty() ? 0 : sorted.get(0).getValue();
     }
 
-    public Player getPlayer(Player player, ITeam team) {
+    public Player getPlayer(Player player, Object team) {
         List<Map.Entry<Player, Integer>> sorted = getSorted(player, team);
         return sorted.isEmpty() ? null : sorted.get(0).getKey();
     }
 
-    public List<Map.Entry<Player, Integer>> getSorted(Player player, ITeam team) {
+    public List<Map.Entry<Player, Integer>> getSorted(Player player, Object team) {
         HashMap<Player, Integer> playerDistanceMap = new HashMap<>();
-        for (Player p : team.getMembers()) {
+        for (Player p : Compass.getBedWars().getPlayersForTeam(team)) {
             if (!player.getWorld().equals(p.getWorld())) {
                 continue;
             }

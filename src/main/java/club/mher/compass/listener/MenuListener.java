@@ -43,7 +43,7 @@ public class MenuListener implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
         Player player = e.getPlayer();
-        ItemStack item = Compass.getBedWars().getVersionSupport().getItemInHand(player);
+        ItemStack item = Compass.getBedWars().getItemInHand(player);
         if (item == null) return;
         if (item.getType() == Material.AIR) return;
         String data = new NBTItem(item).getString("data");
